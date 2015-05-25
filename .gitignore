@@ -63,3 +63,7 @@ build/
 ## OS Specific
 .DS_Store
 /.nb-gradle/private/
+
+## Emacs tmp files
+\#*\#
+*~
