@@ -8,20 +8,43 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class IquaGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
+
+	Scene mainMenu;
+	Scene currentScene;
 	
 	@Override
-	public void create () {
+	public void create ()
+	{
 		batch = new SpriteBatch();
-		img = new Texture("menuprincipalwip.png");
+		this.mainMenu = new Main();
+		this.currentScene = this.mainMenu;
+	}
+	
+	public void update()
+	{
+		this.currentScene.update();
+	}
+	
+	public void display()
+	{
+		this.currentScene.display(this.batch);
 	}
 
 	@Override
-	public void render () {
+	public void render ()
+	{
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		update();
+		
 		batch.begin();
-		batch.draw(img, 0, 0);
+		display();
 		batch.end();
+	}
+	
+	public void changeScene()
+	{
+		
 	}
 }
