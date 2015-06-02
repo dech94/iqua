@@ -67,3 +67,7 @@ build/
 ## Emacs tmp files
 \#*\#
 *~
+
+## Images
+*.psd
+*.xcf

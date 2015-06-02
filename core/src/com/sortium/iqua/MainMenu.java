@@ -3,15 +3,15 @@ package com.sortium.iqua;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Main extends Menu
+public class MainMenu extends Menu
 {
 	private Texture background;
 	
-	public Main()
+	public MainMenu()
 	{
 		super();
 		
-		this.background = new Texture("menuprincipalwip.png");
+		this.background = new Texture("images/menuprincipalwip.png");
 	}
 	
 	public void display(SpriteBatch sb)
