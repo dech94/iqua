@@ -8,10 +8,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class IquaGame extends ApplicationAdapter {
-	SpriteBatch batch;
+	private SpriteBatch batch;
 
-	Scene mainMenu;
-	Scene currentScene;
+	private Scene mainMenu;
+	private Scene currentScene;
+	
+	public static EventManager eventManager;
+	
 	
 	@Override
 	public void create ()
@@ -19,6 +22,8 @@ public class IquaGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		this.mainMenu = new MainMenu();
 		this.currentScene = this.mainMenu;
+		
+		IquaGame.eventManager = new EventManager();
 	}
 	
 	public void update()
@@ -30,7 +35,7 @@ public class IquaGame extends ApplicationAdapter {
 		
 		if( Gdx.input.isTouched() )
 		{
-			this.currentScene = null;
+			// for testing
 		}
 	}
 	
