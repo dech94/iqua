@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MainMenu extends Menu
 {
-	private Texture background;
 	
 	public MainMenu()
 	{
@@ -16,7 +15,7 @@ public class MainMenu extends Menu
 	
 	public void display(SpriteBatch sb)
 	{
-		sb.draw(this.background,0,0);
+		super.display(sb);
 	}
 	
 	
