@@ -1,9 +1,11 @@
-package com.sortium.iqua;
+package com.sortium.iqua.scene;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sortium.iqua.Entity;
+import com.sortium.iqua.event.EventManager;
 
 public class Scene
 {

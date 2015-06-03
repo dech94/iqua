@@ -1,8 +1,8 @@
-package com.sortium.iqua;
+package com.sortium.iqua.scene;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sortium.iqua.event.EventManager;
 
 public class MainMenu extends Menu
 {

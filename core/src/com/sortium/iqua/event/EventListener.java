@@ -1,4 +1,5 @@
-package com.sortium.iqua;
+package com.sortium.iqua.event;
+
 
 public interface EventListener 
 {

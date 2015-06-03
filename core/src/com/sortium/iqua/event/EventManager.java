@@ -1,4 +1,4 @@
-package com.sortium.iqua;
+package com.sortium.iqua.event;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
