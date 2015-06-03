@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MainMenu extends Menu
 {
 	
-	public MainMenu()
+	public MainMenu(EventManager eventManager)
 	{
-		super();
+		super(eventManager);
 		
 		this.background = new Texture("images/menuprincipalwip.png");
 		

@@ -13,17 +13,20 @@ public class IquaGame extends ApplicationAdapter {
 	private Scene mainMenu;
 	private Scene currentScene;
 	
-	public static EventManager eventManager;
+	private EventManager eventManager;
 	
 	
 	@Override
 	public void create ()
 	{
 		batch = new SpriteBatch();
-		this.mainMenu = new MainMenu();
+		this.eventManager = new EventManager();
+		
+		
+		this.mainMenu = new MainMenu(this.eventManager);
 		this.currentScene = this.mainMenu;
 		
-		IquaGame.eventManager = new EventManager();
+		
 	}
 	
 	public void update()
