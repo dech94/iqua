@@ -4,6 +4,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sortium.iqua.event.Event;
+import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.EventManager;
 import com.sortium.iqua.scene.MainMenu;
 import com.sortium.iqua.scene.Scene;
@@ -15,7 +17,8 @@ public class IquaGame extends ApplicationAdapter {
 	private Scene currentScene;
 	
 	private EventManager eventManager;
-	
+	private Button button;
+
 	
 	@Override
 	public void create ()
@@ -26,7 +29,7 @@ public class IquaGame extends ApplicationAdapter {
 		
 		this.mainMenu = new MainMenu(this.eventManager);
 		this.currentScene = this.mainMenu;
-		
+
 	}
 	
 	public void update()
@@ -34,6 +37,7 @@ public class IquaGame extends ApplicationAdapter {
 		if( this.currentScene != null )
 		{
 			this.currentScene.update();
+			this.button.update();
 		}
 		
 		if( Gdx.input.isTouched() )
@@ -47,6 +51,7 @@ public class IquaGame extends ApplicationAdapter {
 		if( this.currentScene != null )
 		{
 			this.currentScene.display(this.batch);
+			this.button.display(this.batch);
 		}
 	}
 
