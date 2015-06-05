@@ -27,7 +27,6 @@ public class IquaGame extends ApplicationAdapter {
 		this.mainMenu = new MainMenu(this.eventManager);
 		this.currentScene = this.mainMenu;
 		
-		
 	}
 	
 	public void update()
