@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.EventManager;
@@ -12,11 +13,34 @@ import com.sortium.iqua.event.EventManager;
 public class Button implements Entity
 {
 	//Declaration 
-	private Rectangle button;
-	private Texture buttonTexture;
-	private Sound clickSound;
-	private EventManager eventmanager;
-	private String eventid;
+	protected Rectangle button;
+	protected Texture buttonTexture;
+	protected Sound clickSound;
+	protected EventManager eventManager;
+	protected String eventid;
+	
+	private class Clicked implements EventListener
+	{
+
+		@Override
+		public boolean execute(Event event) 
+		{
+			ClickEvent ce = (ClickEvent) event;
+			
+			if( Button.this.button.contains(ce.getX(), ce.getY()) )
+			{
+				if( clickSound != null )
+				{
+					clickSound.play();
+				}
+				
+				Button.this.eventManager.trigger(Button.this.eventid);
+			}
+			
+			return true;
+		}
+		
+	}
 	
 	public Button(String pathTexture, String pathSound, int x, int y, int width, int height, EventManager em, String eventid) 
 	{
@@ -37,9 +61,10 @@ public class Button implements Entity
 		button.width = width;
 		button.height = height;
 		
-		this.eventmanager = em;
+		this.eventManager = em;
 		this.eventid = eventid;
 		
+		this.eventManager.subscribe("controles.click", new Clicked());
 	}
 	
 	@Override
@@ -51,15 +76,7 @@ public class Button implements Entity
 	@Override
 	public void update() 
 	{
-		if(this.button.contains(Gdx.input.getX(), Gdx.input.getY()) && Gdx.input.isTouched())
-		{
-			if( clickSound != null )
-			{
-				clickSound.play();
-			}
-			
-			this.eventmanager.trigger(this.eventid);
-		}
+		
 	}
 	
 }

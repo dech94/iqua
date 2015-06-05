@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.EventManager;
@@ -29,7 +30,7 @@ public class IquaGame extends ApplicationAdapter {
 		
 		this.mainMenu = new MainMenu(this.eventManager);
 		this.currentScene = this.mainMenu;
-
+		this.button = new Button("images/badlogic.jpg", null, 200, 200,200, 200, eventManager, "test");
 	}
 	
 	public void update()
@@ -42,7 +43,8 @@ public class IquaGame extends ApplicationAdapter {
 		
 		if( Gdx.input.isTouched() )
 		{
-			// for testing
+			Event event = new ClickEvent(Gdx.input.getX(), Gdx.input.getY());
+			this.eventManager.trigger("controles.click", event);
 		}
 	}
 	
