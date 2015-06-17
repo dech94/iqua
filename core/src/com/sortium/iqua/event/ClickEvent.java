@@ -4,7 +4,7 @@ public class ClickEvent extends Event
 {
 	private int x;
 	private int y;
-	
+	public long time = System.nanoTime();
 	public ClickEvent(int x,int y)
 	{
 		this.x = x;

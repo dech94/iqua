@@ -1,25 +1,57 @@
 package com.sortium.iqua;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.EventManager;
 import com.sortium.iqua.scene.MainMenu;
 import com.sortium.iqua.scene.Scene;
+import com.sortium.iqua.scene.World;
 
 public class IquaGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 
 	private Scene mainMenu;
+	private ArrayList<World> worlds;
 	private Scene currentScene;
 	
 	private EventManager eventManager;
-	private Button button;
+	
+	private class ChangeScene implements EventListener
+	{
+		@Override
+		public boolean execute(Event event) 
+		{
+			String sc = ((ChangeSceneEvent)event).newScene;
+			
+			if( sc.equals("mainMenu") )
+			{
+				IquaGame.this.currentScene = IquaGame.this.mainMenu;
+				return true;
+			}
+			
+			if( sc.equals("quit") )
+			{
+				IquaGame.this.currentScene = null;
+				return true;
+			}
+			
+			int num_sc = Integer.parseInt(sc);
+			Scene next = IquaGame.this.worlds.get(num_sc);
+			next.resetStartTime();
+			IquaGame.this.currentScene = next;
 
+			return true;
+		}
+		
+	}
 	
 	@Override
 	public void create ()
@@ -27,10 +59,20 @@ public class IquaGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		this.eventManager = new EventManager();
 		
+		this.worlds = new ArrayList<World>();
+		createWorlds();
 		
-		this.mainMenu = new MainMenu(this.eventManager);
+		this.mainMenu = new MainMenu(this);
 		this.currentScene = this.mainMenu;
-		this.button = new Button("images/badlogic.jpg", null, 200, 200,200, 200, eventManager, "test");
+				
+		this.eventManager.subscribe("scene.change", new ChangeScene());
+		
+	}
+	
+	public void createWorlds()
+	{
+		this.worlds.add(new World(this, "images/Background/screen1.png", "1", null, null, null));
+		this.worlds.add(new World(this, "images/Background/screen2.png", "0", null, null, null));
 	}
 	
 	public void update()
@@ -38,7 +80,6 @@ public class IquaGame extends ApplicationAdapter {
 		if( this.currentScene != null )
 		{
 			this.currentScene.update();
-			this.button.update();
 		}
 		
 		if( Gdx.input.isTouched() )
@@ -53,7 +94,6 @@ public class IquaGame extends ApplicationAdapter {
 		if( this.currentScene != null )
 		{
 			this.currentScene.display(this.batch);
-			this.button.display(this.batch);
 		}
 	}
 
@@ -70,8 +110,13 @@ public class IquaGame extends ApplicationAdapter {
 		batch.end();
 	}
 	
-	public void changeScene()
+	public EventManager getEventManager()
 	{
-		
+		return this.eventManager;
+	}
+	
+	public Scene getCurrentScene()
+	{
+		return this.currentScene;
 	}
 }

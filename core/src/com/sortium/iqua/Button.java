@@ -9,6 +9,7 @@ import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.EventManager;
+import com.sortium.iqua.scene.Scene;
 
 public class Button implements Entity
 {
@@ -18,23 +19,36 @@ public class Button implements Entity
 	protected Sound clickSound;
 	protected EventManager eventManager;
 	protected String eventid;
+	protected Event event;
+
+	protected long delay = 250000000l ;
+	protected long now = System.nanoTime();
+	protected Scene owner;
 	
 	private class Clicked implements EventListener
 	{
-
+		
+		
 		@Override
 		public boolean execute(Event event) 
 		{
 			ClickEvent ce = (ClickEvent) event;
-			
-			if( Button.this.button.contains(ce.getX(), ce.getY()) )
+
+			if( Button.this.button.contains(ce.getX(), ce.getY()) 
+				&& Button.this.owner.getGame().getCurrentScene() == Button.this.owner
+				&& System.nanoTime() - Button.this.owner.getStartTime() >= 250000000l)
 			{
-				if( clickSound != null )
+				//System.out.println(System.nanoTime() - Button.this.now);
+				if( System.nanoTime() - Button.this.now >= Button.this.delay )
 				{
-					clickSound.play();
+					if( clickSound != null )
+					{
+						clickSound.play();
+					}
+					
+					Button.this.eventManager.trigger(Button.this.eventid, Button.this.event);
+					Button.this.now = System.nanoTime();
 				}
-				
-				Button.this.eventManager.trigger(Button.this.eventid);
 			}
 			
 			return true;
@@ -42,10 +56,11 @@ public class Button implements Entity
 		
 	}
 	
-	public Button(String pathTexture, String pathSound, int x, int y, int width, int height, EventManager em, String eventid) 
+	public Button(Scene owner, String pathTexture, String pathSound, int x, int y, int width, int height, EventManager em, String eventid, Event event) 
 	{
+		this.owner = owner;
 		this.buttonTexture = new Texture (Gdx.files.internal(pathTexture));
-
+		
 		try
 		{
 			this.clickSound = Gdx.audio.newSound(Gdx.files.internal(pathSound));
@@ -63,6 +78,7 @@ public class Button implements Entity
 		
 		this.eventManager = em;
 		this.eventid = eventid;
+		this.event = event;
 		
 		this.eventManager.subscribe("controles.click", new Clicked());
 	}
