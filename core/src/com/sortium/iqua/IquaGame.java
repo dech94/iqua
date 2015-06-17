@@ -71,8 +71,9 @@ public class IquaGame extends ApplicationAdapter {
 	
 	public void createWorlds()
 	{
-		this.worlds.add(new World(this, "images/Background/screen1.png", "1", null, null, null));
-		this.worlds.add(new World(this, "images/Background/screen2.png", "0", null, null, null));
+		this.worlds.add(new World(this, "images/Background/screen1.png", "1", "1", "1", "1"));
+		this.worlds.add(new World(this, "images/Background/screen2.png", "0", null, "0", null));
+		
 	}
 	
 	public void update()

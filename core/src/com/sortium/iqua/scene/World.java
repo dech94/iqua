@@ -1,5 +1,6 @@
 package com.sortium.iqua.scene;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.Button;
@@ -25,7 +26,7 @@ public class World extends Scene
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent();
 			cse.newScene = up;
-			btn_up = new Button(this, "images/Btn/haut.png", null, 0, 0, 32, 32, this.eventManager, "scene.change", cse);
+			btn_up = new Button(this, "images/Btn/haut.png", null, (Gdx.graphics.getWidth() -16)/2, 0, 32, 32, this.eventManager, "scene.change", cse);
 		}
 		
 		
@@ -33,7 +34,21 @@ public class World extends Scene
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent();
 			cse.newScene = down;
-			btn_up = new Button(this, "images/Btn/bas.png", null, 0, 200, 32, 32, this.eventManager, "scene.change", cse);
+			btn_down = new Button(this, "images/Btn/bas.png", null, (Gdx.graphics.getWidth() -16)/2, Gdx.graphics.getHeight()-32, 32, 32, this.eventManager, "scene.change", cse);
+		}
+		
+		if( left != null )
+		{
+			ChangeSceneEvent cse = new ChangeSceneEvent();
+			cse.newScene = left;
+			btn_left = new Button(this, "images/Btn/gauche.png", null, 0, (Gdx.graphics.getHeight()-32)/2, 32, 32, this.eventManager, "scene.change", cse);
+		}
+		
+		if( right != null )
+		{
+			ChangeSceneEvent cse = new ChangeSceneEvent();
+			cse.newScene = right;
+			btn_right = new Button(this, "images/Btn/droite.png", null, Gdx.graphics.getWidth() - 32, (Gdx.graphics.getHeight()-32)/2, 32, 32, this.eventManager, "scene.change", cse);
 		}
 	}
 	
@@ -49,6 +64,16 @@ public class World extends Scene
 		if( this.btn_down != null ) 
 		{
 			this.btn_down.display(sb);
+		}
+		
+		if( this.btn_left != null ) 
+		{
+			this.btn_left.display(sb);
+		}
+		
+		if( this.btn_right != null ) 
+		{
+			this.btn_right.display(sb);
 		}
 	}
 
