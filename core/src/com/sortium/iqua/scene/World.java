@@ -19,7 +19,7 @@ public class World extends Scene
 	public World(IquaGame game, String img_path, String up, String down, String left, String right)
 	{
 		super(game);
-		this.background = new Texture(img_path);
+		this.background = new Texture(Gdx.files.internal(img_path));
 		
 		//btn
 		if( up != null )

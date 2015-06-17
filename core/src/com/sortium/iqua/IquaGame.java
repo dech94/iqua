@@ -43,11 +43,11 @@ public class IquaGame extends ApplicationAdapter {
 				return true;
 			}
 			
-			int num_sc = Integer.parseInt(sc);
+			int num_sc = Integer.parseInt(sc) - 1;
 			Scene next = IquaGame.this.worlds.get(num_sc);
 			next.resetStartTime();
 			IquaGame.this.currentScene = next;
-
+			System.out.println("load scene " + (num_sc+1));
 			return true;
 		}
 		
@@ -71,8 +71,16 @@ public class IquaGame extends ApplicationAdapter {
 	
 	public void createWorlds()
 	{
-		this.worlds.add(new World(this, "images/Background/screen1.png", "1", "1", "1", "1"));
-		this.worlds.add(new World(this, "images/Background/screen2.png", "0", null, "0", null));
+		this.worlds.add(new World(this, "images/Background/screen1.png", "2", null, null,  null));
+		this.worlds.add(new World(this, "images/Background/screen2.png", "5", "1", null,  null));
+		this.worlds.add(new World(this, "images/Background/screen3.png", "5", "2", null,  null));
+		this.worlds.add(new World(this, "images/Background/screen4.png", null, null, null,  null));
+		this.worlds.add(new World(this, "images/Background/screen5.png", null, "2",null, "6"));
+		this.worlds.add(new World(this, "images/Background/screen6.png", null, "5", null,  "7"));
+		this.worlds.add(new World(this, "images/Background/screen7.png", null, null, "8",  "6"));
+		this.worlds.add(new World(this, "images/Background/screen8.png", null, "10", "9",  "7"));
+		this.worlds.add(new World(this, "images/Background/screen9.png", null, null, null,  "8"));
+		this.worlds.add(new World(this, "images/Background/screen10.png", null, "7", null,  null));
 		
 	}
 	

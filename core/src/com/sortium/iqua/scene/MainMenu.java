@@ -1,5 +1,6 @@
 package com.sortium.iqua.scene;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.Button;
@@ -17,8 +18,9 @@ public class MainMenu extends Menu
 		super(game);
 		
 		ChangeSceneEvent event = new ChangeSceneEvent();
-		event.newScene = "0";
-		this.background = new Texture("images/menuprincipalwip.png");
+		event.newScene = "1";
+		
+		this.background = new Texture(Gdx.files.internal("images/menuprincipalwip.png"));
 		this.demoBtn = new Button(this, "images/Btn/btnRep.png", null, 100, 100, 96, 32, 
 											this.eventManager, "scene.change", event );
 	}
