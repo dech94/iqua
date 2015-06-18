@@ -20,8 +20,8 @@ public class MainMenu extends Menu
 		ChangeSceneEvent event = new ChangeSceneEvent();
 		event.newScene = "1";
 		
-		this.background = new Texture(Gdx.files.internal("images/menuprincipalwip.png"));
-		this.demoBtn = new Button(this, "images/Btn/btnRep.png", null, 100, 100, 96, 32, 
+		this.background = new Texture(Gdx.files.internal("images/screenlaunch.png"));
+		this.demoBtn = new Button(this, "images/Btn/btndemo.png", null, (Gdx.graphics.getWidth()-100)/2, 3*(Gdx.graphics.getHeight()-32)/4, 96, 32, 
 											this.eventManager, "scene.change", event );
 	}
 	
@@ -29,7 +29,7 @@ public class MainMenu extends Menu
 	{
 		//super.display(sb);
 		
-		sb.draw(this.background, 0, -960+480);
+		sb.draw(this.background, 0, 0);
 		this.demoBtn.display(sb);
 	}
 	
