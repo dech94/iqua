@@ -19,6 +19,7 @@ public class IquaGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 
 	private Scene mainMenu;
+	private String current = "1";
 	private ArrayList<World> worlds;
 	private Scene currentScene;
 	
@@ -48,6 +49,7 @@ public class IquaGame extends ApplicationAdapter {
 			next.resetStartTime();
 			IquaGame.this.currentScene = next;
 			System.out.println("load scene " + (num_sc+1));
+			current=Integer.toString(num_sc+1);
 			return true;
 		}
 		
@@ -62,7 +64,7 @@ public class IquaGame extends ApplicationAdapter {
 		this.worlds = new ArrayList<World>();
 		createWorlds();
 		
-		this.mainMenu = new MainMenu(this);
+		this.mainMenu = new MainMenu(this,current);
 		this.currentScene = this.mainMenu;
 				
 		this.eventManager.subscribe("scene.change", new ChangeScene());
@@ -72,15 +74,16 @@ public class IquaGame extends ApplicationAdapter {
 	public void createWorlds()
 	{
 		this.worlds.add(new World(this, "images/Background/screen1.png", "2", null, null,  null));
-		this.worlds.add(new World(this, "images/Background/screen2.png", "5", "1", null,  null));
-		this.worlds.add(new World(this, "images/Background/screen3.png", "5", "2", null,  null));
-		this.worlds.add(new World(this, "images/Background/screen4.png", null, null, null,  null));
-		this.worlds.add(new World(this, "images/Background/screen5.png", null, "2",null, "6"));
-		this.worlds.add(new World(this, "images/Background/screen6.png", null, "5", null,  "7"));
+		this.worlds.add(new World(this, "images/Background/screen2.png", "4", "1", null,  "3"));
+		this.worlds.add(new World(this, "images/Background/screen3.png", null, "2", null,  null));
+		this.worlds.add(new World(this, "images/Background/screen4.png", null, null, "5",  "2"));
+		this.worlds.add(new World(this, "images/Background/screen5.png", null, "4",null, "6"));
+		this.worlds.add(new World(this, "images/Background/screen6.png", "7", "5", null,  null));
 		this.worlds.add(new World(this, "images/Background/screen7.png", null, null, "8",  "6"));
 		this.worlds.add(new World(this, "images/Background/screen8.png", null, "10", "9",  "7"));
 		this.worlds.add(new World(this, "images/Background/screen9.png", null, null, null,  "8"));
-		this.worlds.add(new World(this, "images/Background/screen10.png", null, "7", null,  null));
+		this.worlds.add(new World(this, "images/Background/screen10.png", null, "8", null,  null));
+		this.worlds.add(new World(this, "images/work.png", null, null, null, null));
 		
 	}
 	
@@ -109,7 +112,7 @@ public class IquaGame extends ApplicationAdapter {
 	@Override
 	public void render ()
 	{
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		update();

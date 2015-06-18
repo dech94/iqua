@@ -15,6 +15,11 @@ public class World extends Scene
 	protected Button btn_down;
 	protected Button btn_left;
 	protected Button btn_right;
+	protected Button btn_pause;
+	protected Button btn_map;
+	protected Button btn_quest;
+	protected Button btn_dial;
+	
 	
 	public World(IquaGame game, String img_path, String up, String down, String left, String right)
 	{
@@ -22,6 +27,11 @@ public class World extends Scene
 		this.background = new Texture(Gdx.files.internal(img_path));
 		
 		//btn
+		
+		ChangeSceneEvent csm = new ChangeSceneEvent();
+		csm.newScene = "mainMenu";
+		btn_pause = new Button(this, "images/btn/btnPause.png", null, 8, 8, 32, 32, this.eventManager, "scene.change", csm);
+			
 		if( up != null )
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent();
@@ -75,6 +85,7 @@ public class World extends Scene
 		{
 			this.btn_right.display(sb);
 		}
+		this.btn_pause.display(sb);
 	}
 
 }

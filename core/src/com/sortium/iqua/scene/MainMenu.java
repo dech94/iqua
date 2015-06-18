@@ -13,16 +13,15 @@ public class MainMenu extends Menu
 {
 	private Button demoBtn;
 	
-	public MainMenu(IquaGame game)
+	public MainMenu(IquaGame game,String current)
 	{
 		super(game);
 		
 		ChangeSceneEvent event = new ChangeSceneEvent();
-		event.newScene = "1";
+		event.newScene = current;
 		
 		this.background = new Texture(Gdx.files.internal("images/screenlaunch.png"));
-		this.demoBtn = new Button(this, "images/Btn/btndemo.png", null, (Gdx.graphics.getWidth()-100)/2, 3*(Gdx.graphics.getHeight()-32)/4, 96, 32, 
-											this.eventManager, "scene.change", event );
+		this.demoBtn = new Button(this, "images/Btn/btndemo.png", null, (Gdx.graphics.getWidth()-100)/2, 3*(Gdx.graphics.getHeight()-32)/4, 96, 32, this.eventManager, "scene.change", event );
 	}
 	
 	public void display(SpriteBatch sb)
