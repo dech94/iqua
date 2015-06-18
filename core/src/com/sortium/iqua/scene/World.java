@@ -30,7 +30,7 @@ public class World extends Scene
 		
 		ChangeSceneEvent csm = new ChangeSceneEvent();
 		csm.newScene = "mainMenu";
-		btn_pause = new Button(this, "images/btn/btnPause.png", null, 8, 8, 32, 32, this.eventManager, "scene.change", csm);
+		btn_pause = new Button(this, "images/Btn/btnPause.png", null, 8, 8, 32, 32, this.eventManager, "scene.change", csm);
 			
 		if( up != null )
 		{
