@@ -3,11 +3,11 @@ package com.sortium.iqua.event;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class EventManager 
+public class EventEngine 
 {
 	private Hashtable<String, ArrayList<EventListener>> events;
 	
-	public EventManager()
+	public EventEngine()
 	{
 		this.events = new Hashtable<String, ArrayList<EventListener>>();
 	}

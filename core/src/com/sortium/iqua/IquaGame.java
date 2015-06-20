@@ -10,7 +10,10 @@ import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
-import com.sortium.iqua.event.EventManager;
+import com.sortium.iqua.event.EventEngine;
+import com.sortium.iqua.event.GetEvent;
+import com.sortium.iqua.manager.EntityManager;
+import com.sortium.iqua.manager.ItemManager;
 import com.sortium.iqua.scene.MainMenu;
 import com.sortium.iqua.scene.Scene;
 import com.sortium.iqua.scene.World;
@@ -23,7 +26,12 @@ public class IquaGame extends ApplicationAdapter {
 	private ArrayList<World> worlds;
 	private Scene currentScene;
 	
-	private EventManager eventManager;
+	// Engine
+	private EventEngine eventEngine;
+	
+	// Manager
+	private ArrayList<EntityManager> managers;
+	private ItemManager itemManager;
 	
 	private class ChangeScene implements EventListener
 	{
@@ -59,16 +67,20 @@ public class IquaGame extends ApplicationAdapter {
 	public void create ()
 	{
 		batch = new SpriteBatch();
-		this.eventManager = new EventManager();
+		this.eventEngine = new EventEngine();
 		
 		this.worlds = new ArrayList<World>();
 		createWorlds();
 		
 		this.mainMenu = new MainMenu(this,current);
 		this.currentScene = this.mainMenu;
-				
-		this.eventManager.subscribe("scene.change", new ChangeScene());
 		
+		this.eventEngine.subscribe("scene.change", new ChangeScene());
+		
+		// manager
+		this.managers = new ArrayList<EntityManager>();
+		this.itemManager = new ItemManager(this);
+		this.managers.add(this.itemManager);
 	}
 	
 	public void createWorlds()
@@ -97,7 +109,12 @@ public class IquaGame extends ApplicationAdapter {
 		if( Gdx.input.isTouched() )
 		{
 			Event event = new ClickEvent(Gdx.input.getX(), Gdx.input.getY());
-			this.eventManager.trigger("controles.click", event);
+			this.eventEngine.trigger("input.click", event);
+		}
+		
+		for( EntityManager manager : this.managers)
+		{
+			manager.update();
 		}
 	}
 	
@@ -106,6 +123,11 @@ public class IquaGame extends ApplicationAdapter {
 		if( this.currentScene != null )
 		{
 			this.currentScene.display(this.batch);
+		}
+		
+		for( EntityManager manager : this.managers)
+		{
+			manager.display(this.batch);
 		}
 	}
 
@@ -122,9 +144,9 @@ public class IquaGame extends ApplicationAdapter {
 		batch.end();
 	}
 	
-	public EventManager getEventManager()
+	public EventEngine getEventManager()
 	{
-		return this.eventManager;
+		return this.eventEngine;
 	}
 	
 	public Scene getCurrentScene()

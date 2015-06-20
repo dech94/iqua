@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
-import com.sortium.iqua.event.EventManager;
+import com.sortium.iqua.event.EventEngine;
 import com.sortium.iqua.scene.Scene;
 
 public class Button implements Entity
@@ -17,7 +17,7 @@ public class Button implements Entity
 	protected Rectangle button;
 	protected Texture buttonTexture;
 	protected Sound clickSound;
-	protected EventManager eventManager;
+	protected EventEngine eventManager;
 	protected String eventid;
 	protected Event event;
 
@@ -25,10 +25,8 @@ public class Button implements Entity
 	protected long now = System.nanoTime();
 	protected Scene owner;
 	
-	private class Clicked implements EventListener
+	protected class Clicked implements EventListener
 	{
-		
-		
 		@Override
 		public boolean execute(Event event) 
 		{
@@ -38,7 +36,6 @@ public class Button implements Entity
 				&& Button.this.owner.getGame().getCurrentScene() == Button.this.owner
 				&& System.nanoTime() - Button.this.owner.getStartTime() >= 250000000l)
 			{
-				//System.out.println(System.nanoTime() - Button.this.now);
 				if( System.nanoTime() - Button.this.now >= Button.this.delay )
 				{
 					if( clickSound != null )
@@ -46,7 +43,11 @@ public class Button implements Entity
 						clickSound.play();
 					}
 					
-					Button.this.eventManager.trigger(Button.this.eventid, Button.this.event);
+					if(Button.this.event != null)
+					{
+						Button.this.eventManager.trigger(Button.this.eventid, Button.this.event);
+					}
+					
 					Button.this.now = System.nanoTime();
 				}
 			}
@@ -56,7 +57,12 @@ public class Button implements Entity
 		
 	}
 	
-	public Button(Scene owner, String pathTexture, String pathSound, int x, int y, int width, int height, EventManager em, String eventid, Event event) 
+	public Button(Scene owner, String pathTexture, String pathSound, int x, int y, int width, int height)
+	{
+		this(owner, pathTexture, pathSound, x, y, width, height, null, null);
+	}
+	
+	public Button(Scene owner, String pathTexture, String pathSound, int x, int y, int width, int height, String eventid, Event event) 
 	{
 		this.owner = owner;
 		this.buttonTexture = new Texture (Gdx.files.internal(pathTexture));
@@ -76,11 +82,11 @@ public class Button implements Entity
 		button.width = width;
 		button.height = height;
 		
-		this.eventManager = em;
+		this.eventManager = this.owner.getGame().getEventManager();
 		this.eventid = eventid;
 		this.event = event;
 		
-		this.eventManager.subscribe("controles.click", new Clicked());
+		this.eventManager.subscribe("input.click", new Clicked());
 	}
 	
 	@Override

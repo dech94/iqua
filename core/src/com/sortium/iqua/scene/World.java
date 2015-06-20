@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.Button;
 import com.sortium.iqua.IquaGame;
 import com.sortium.iqua.event.ChangeSceneEvent;
-import com.sortium.iqua.event.EventManager;
+import com.sortium.iqua.event.EventEngine;
 
 public class World extends Scene
 {
@@ -30,13 +30,13 @@ public class World extends Scene
 		
 		ChangeSceneEvent csm = new ChangeSceneEvent();
 		csm.newScene = "mainMenu";
-		btn_pause = new Button(this, "images/Btn/btnPause.png", null, 8, 8, 32, 32, this.eventManager, "scene.change", csm);
+		btn_pause = new Button(this, "images/Btn/btnPause.png", null, 8, 8, 32, 32, "scene.change", csm);
 			
 		if( up != null )
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent();
 			cse.newScene = up;
-			btn_up = new Button(this, "images/Btn/haut.png", null, (Gdx.graphics.getWidth() -16)/2, 0, 32, 32, this.eventManager, "scene.change", cse);
+			btn_up = new Button(this, "images/Btn/haut.png", null, (Gdx.graphics.getWidth() -16)/2, 0, 32, 32,"scene.change", cse);
 		}
 		
 		
@@ -44,21 +44,21 @@ public class World extends Scene
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent();
 			cse.newScene = down;
-			btn_down = new Button(this, "images/Btn/bas.png", null, (Gdx.graphics.getWidth() -16)/2, Gdx.graphics.getHeight()-32, 32, 32, this.eventManager, "scene.change", cse);
+			btn_down = new Button(this, "images/Btn/bas.png", null, (Gdx.graphics.getWidth() -16)/2, Gdx.graphics.getHeight()-32, 32, 32, "scene.change", cse);
 		}
 		
 		if( left != null )
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent();
 			cse.newScene = left;
-			btn_left = new Button(this, "images/Btn/gauche.png", null, 0, (Gdx.graphics.getHeight()-32)/2, 32, 32, this.eventManager, "scene.change", cse);
+			btn_left = new Button(this, "images/Btn/gauche.png", null, 0, (Gdx.graphics.getHeight()-32)/2, 32, 32, "scene.change", cse);
 		}
 		
 		if( right != null )
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent();
 			cse.newScene = right;
-			btn_right = new Button(this, "images/Btn/droite.png", null, Gdx.graphics.getWidth() - 32, (Gdx.graphics.getHeight()-32)/2, 32, 32, this.eventManager, "scene.change", cse);
+			btn_right = new Button(this, "images/Btn/droite.png", null, Gdx.graphics.getWidth() - 32, (Gdx.graphics.getHeight()-32)/2, 32, 32, "scene.change", cse);
 		}
 	}
 	

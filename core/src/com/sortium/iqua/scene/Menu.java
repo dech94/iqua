@@ -1,7 +1,7 @@
 package com.sortium.iqua.scene;
 
 import com.sortium.iqua.IquaGame;
-import com.sortium.iqua.event.EventManager;
+import com.sortium.iqua.event.EventEngine;
 
 public class Menu extends Scene 
 {

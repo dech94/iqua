@@ -5,15 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.Button;
 import com.sortium.iqua.IquaGame;
+import com.sortium.iqua.Item;
 import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.Event;
-import com.sortium.iqua.event.EventManager;
+import com.sortium.iqua.event.EventEngine;
 
 public class MainMenu extends Menu
 {
 	private Button demoBtn;
 	
-	public MainMenu(IquaGame game,String current)
+	public MainMenu(IquaGame game, String current)
 	{
 		super(game);
 		
@@ -21,7 +22,7 @@ public class MainMenu extends Menu
 		event.newScene = current;
 		
 		this.background = new Texture(Gdx.files.internal("images/screenlaunch.png"));
-		this.demoBtn = new Button(this, "images/Btn/btndemo.png", null, (Gdx.graphics.getWidth()-100)/2, 3*(Gdx.graphics.getHeight()-32)/4, 96, 32, this.eventManager, "scene.change", event );
+		this.demoBtn = new Button(this, "images/Btn/btndemo.png", null, (Gdx.graphics.getWidth()-100)/2, 3*(Gdx.graphics.getHeight()-32)/4, 96, 32, "scene.change", event );
 	}
 	
 	public void display(SpriteBatch sb)
