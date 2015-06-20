@@ -21,7 +21,7 @@ public class Scene
 	{
 		this.entities = new ArrayList<Entity>();
 		this.game = game;
-		this.eventManager = this.game.getEventManager();
+		this.eventManager = this.game.getEventEngine();
 	}
 	
 	public void update()

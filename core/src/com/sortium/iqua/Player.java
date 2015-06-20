@@ -1,11 +1,13 @@
 package com.sortium.iqua;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 public class Player
 {
-	public Player()
+	protected Inventory inventory;
+	protected IquaGame game;
+	
+	public Player(IquaGame game)
 	{
-		
+		this.inventory = new Inventory(game);
+		this.game = game;
 	}
 }

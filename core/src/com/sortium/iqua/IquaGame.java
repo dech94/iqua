@@ -11,7 +11,6 @@ import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.EventEngine;
-import com.sortium.iqua.event.GetEvent;
 import com.sortium.iqua.manager.EntityManager;
 import com.sortium.iqua.manager.ItemManager;
 import com.sortium.iqua.scene.MainMenu;
@@ -25,6 +24,7 @@ public class IquaGame extends ApplicationAdapter {
 	private String current = "1";
 	private ArrayList<World> worlds;
 	private Scene currentScene;
+	private Player player;
 	
 	// Engine
 	private EventEngine eventEngine;
@@ -66,9 +66,9 @@ public class IquaGame extends ApplicationAdapter {
 	@Override
 	public void create ()
 	{
-		batch = new SpriteBatch();
+		batch = new SpriteBatch();		
 		this.eventEngine = new EventEngine();
-		
+		this.player = new Player(this);
 		this.worlds = new ArrayList<World>();
 		createWorlds();
 		
@@ -81,6 +81,8 @@ public class IquaGame extends ApplicationAdapter {
 		this.managers = new ArrayList<EntityManager>();
 		this.itemManager = new ItemManager(this);
 		this.managers.add(this.itemManager);
+		
+		this.itemManager.add(new Item(this.worlds.get(2), "images/Btn/BtnQuete.png", null, 300, 300, 100, 100, "test", "juste un test"));
 	}
 	
 	public void createWorlds()
@@ -144,7 +146,7 @@ public class IquaGame extends ApplicationAdapter {
 		batch.end();
 	}
 	
-	public EventEngine getEventManager()
+	public EventEngine getEventEngine()
 	{
 		return this.eventEngine;
 	}

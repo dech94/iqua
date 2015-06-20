@@ -1,6 +1,7 @@
 package com.sortium.iqua.manager;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sortium.iqua.Button;
 import com.sortium.iqua.Entity;
 import com.sortium.iqua.IquaGame;
 
@@ -17,7 +18,20 @@ public class EntityManager extends Manager<Entity> implements Entity
 	{
 		for( Entity entity : this.bucket)
 		{
-			entity.display(sb);
+			if( entity instanceof Button )
+			{
+				Button b = (Button)entity;
+				
+				if( this.game.getCurrentScene() == b.getScene() )
+				{
+					entity.display(sb);
+				}
+				
+			}
+			else
+			{
+				entity.display(sb);
+			}
 		}
 	}
 

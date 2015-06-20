@@ -2,7 +2,6 @@ package com.sortium.iqua.manager;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.IquaGame;
 import com.sortium.iqua.event.GetEvent;
 import com.sortium.iqua.event.Event;
@@ -12,6 +11,7 @@ public abstract class Manager<T>
 {
 	protected class Add implements EventListener
 	{
+		@SuppressWarnings("unchecked")
 		@Override
 		public boolean execute(Event event) 
 		{
@@ -29,6 +29,7 @@ public abstract class Manager<T>
 	
 	protected class Remove implements EventListener
 	{
+		@SuppressWarnings("unchecked")
 		@Override
 		public boolean execute(Event event) 
 		{
@@ -46,13 +47,15 @@ public abstract class Manager<T>
 	protected ArrayList<T> bucket= new ArrayList<T>();
 	
 	protected String name;
+	protected IquaGame game;
 	
 	public Manager(IquaGame game, String name)
 	{
 		this.name = name;
 		
-		game.getEventManager().subscribe(name+".add", new Add());
-		game.getEventManager().subscribe(name+".remove", new Remove());
+		this.game = game;
+		this.game.getEventEngine().subscribe(name+".add", new Add());
+		this.game.getEventEngine().subscribe(name+".remove", new Remove());
 		
 	}
 	

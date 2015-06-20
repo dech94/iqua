@@ -82,7 +82,7 @@ public class Button implements Entity
 		button.width = width;
 		button.height = height;
 		
-		this.eventManager = this.owner.getGame().getEventManager();
+		this.eventManager = this.owner.getGame().getEventEngine();
 		this.eventid = eventid;
 		this.event = event;
 		
@@ -99,6 +99,11 @@ public class Button implements Entity
 	public void update() 
 	{
 		
+	}
+	
+	public Scene getScene()
+	{
+		return this.owner;
 	}
 	
 }
