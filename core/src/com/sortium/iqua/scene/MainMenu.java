@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.Button;
 import com.sortium.iqua.IquaGame;
-import com.sortium.iqua.Item;
 import com.sortium.iqua.event.ChangeSceneEvent;
-import com.sortium.iqua.event.Event;
-import com.sortium.iqua.event.EventEngine;
 
 public class MainMenu extends Menu
 {

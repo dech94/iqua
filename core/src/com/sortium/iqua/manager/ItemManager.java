@@ -3,6 +3,7 @@ package com.sortium.iqua.manager;
 import com.sortium.iqua.IquaGame;
 import com.sortium.iqua.Item;
 import com.sortium.iqua.event.Event;
+import com.sortium.iqua.event.EventEngine;
 import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.GetEvent;
 
@@ -27,7 +28,7 @@ public class ItemManager extends EntityManager
 	public ItemManager(IquaGame game) 
 	{
 		super(game, "item");
-		this.game.getEventEngine().subscribe("item.take", new RemoveItem());
+		EventEngine.get().subscribe("item.take", new RemoveItem());
 	}
 	
 }

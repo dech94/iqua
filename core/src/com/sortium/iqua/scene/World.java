@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.Button;
 import com.sortium.iqua.IquaGame;
 import com.sortium.iqua.event.ChangeSceneEvent;
-import com.sortium.iqua.event.EventEngine;
 
 public class World extends Scene
 {

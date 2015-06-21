@@ -17,7 +17,6 @@ public class Button implements Entity
 	protected Rectangle button;
 	protected Texture buttonTexture;
 	protected Sound clickSound;
-	protected EventEngine eventManager;
 	protected String eventid;
 	protected Event event;
 
@@ -45,7 +44,7 @@ public class Button implements Entity
 					
 					if(Button.this.event != null)
 					{
-						Button.this.eventManager.trigger(Button.this.eventid, Button.this.event);
+						EventEngine.get().trigger(Button.this.eventid, Button.this.event);
 					}
 					
 					Button.this.now = System.nanoTime();
@@ -82,11 +81,10 @@ public class Button implements Entity
 		button.width = width;
 		button.height = height;
 		
-		this.eventManager = this.owner.getGame().getEventEngine();
 		this.eventid = eventid;
 		this.event = event;
 		
-		this.eventManager.subscribe("input.click", new Clicked());
+		EventEngine.get().subscribe("input.click", new Clicked());
 	}
 	
 	@Override

@@ -6,9 +6,21 @@ import java.util.Hashtable;
 public class EventEngine 
 {
 	private Hashtable<String, ArrayList<EventListener>> events;
+	private static EventEngine instance;
 	
-	public EventEngine()
+	public static EventEngine get()
 	{
+		if( EventEngine.instance == null )
+		{
+			EventEngine.instance = new EventEngine();
+		}
+		
+		return EventEngine.instance;
+	}
+	
+	private EventEngine()
+	{
+		EventEngine.instance = this;
 		this.events = new Hashtable<String, ArrayList<EventListener>>();
 	}
 	

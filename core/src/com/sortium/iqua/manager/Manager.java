@@ -3,6 +3,7 @@ package com.sortium.iqua.manager;
 import java.util.ArrayList;
 
 import com.sortium.iqua.IquaGame;
+import com.sortium.iqua.event.EventEngine;
 import com.sortium.iqua.event.GetEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
@@ -54,8 +55,8 @@ public abstract class Manager<T>
 		this.name = name;
 		
 		this.game = game;
-		this.game.getEventEngine().subscribe(name+".add", new Add());
-		this.game.getEventEngine().subscribe(name+".remove", new Remove());
+		EventEngine.get().subscribe(name+".add", new Add());
+		EventEngine.get().subscribe(name+".remove", new Remove());
 		
 	}
 	

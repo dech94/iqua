@@ -26,9 +26,6 @@ public class IquaGame extends ApplicationAdapter {
 	private Scene currentScene;
 	private Player player;
 	
-	// Engine
-	private EventEngine eventEngine;
-	
 	// Manager
 	private ArrayList<EntityManager> managers;
 	private ItemManager itemManager;
@@ -67,7 +64,6 @@ public class IquaGame extends ApplicationAdapter {
 	public void create ()
 	{
 		batch = new SpriteBatch();		
-		this.eventEngine = new EventEngine();
 		this.player = new Player(this);
 		this.worlds = new ArrayList<World>();
 		createWorlds();
@@ -75,13 +71,12 @@ public class IquaGame extends ApplicationAdapter {
 		this.mainMenu = new MainMenu(this,current);
 		this.currentScene = this.mainMenu;
 		
-		this.eventEngine.subscribe("scene.change", new ChangeScene());
+		EventEngine.get().subscribe("scene.change", new ChangeScene());
 		
 		// manager
 		this.managers = new ArrayList<EntityManager>();
 		this.itemManager = new ItemManager(this);
 		this.managers.add(this.itemManager);
-		
 		this.itemManager.add(new Item(this.worlds.get(2), "images/Btn/BtnQuete.png", null, 300, 300, 100, 100, "test", "juste un test"));
 	}
 	
@@ -111,7 +106,7 @@ public class IquaGame extends ApplicationAdapter {
 		if( Gdx.input.isTouched() )
 		{
 			Event event = new ClickEvent(Gdx.input.getX(), Gdx.input.getY());
-			this.eventEngine.trigger("input.click", event);
+			EventEngine.get().trigger("input.click", event);
 		}
 		
 		for( EntityManager manager : this.managers)
@@ -144,12 +139,9 @@ public class IquaGame extends ApplicationAdapter {
 		batch.begin();
 		display();
 		batch.end();
+
 	}
-	
-	public EventEngine getEventEngine()
-	{
-		return this.eventEngine;
-	}
+
 	
 	public Scene getCurrentScene()
 	{

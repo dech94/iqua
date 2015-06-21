@@ -6,12 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.Entity;
 import com.sortium.iqua.IquaGame;
-import com.sortium.iqua.event.EventEngine;
 
 public class Scene
 {
 	protected ArrayList<Entity> entities;
-	protected EventEngine eventManager;
 	protected IquaGame game;
 	protected long startTime = System.nanoTime();
 	
@@ -21,7 +19,6 @@ public class Scene
 	{
 		this.entities = new ArrayList<Entity>();
 		this.game = game;
-		this.eventManager = this.game.getEventEngine();
 	}
 	
 	public void update()
@@ -43,7 +40,6 @@ public class Scene
 		{
 			entity.display(sb);
 		}
-		
 	}
 	
 	public IquaGame getGame()

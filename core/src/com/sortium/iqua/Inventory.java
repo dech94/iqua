@@ -3,6 +3,7 @@ package com.sortium.iqua;
 import java.util.ArrayList;
 
 import com.sortium.iqua.event.Event;
+import com.sortium.iqua.event.EventEngine;
 import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.GetEvent;
 
@@ -31,7 +32,7 @@ public class Inventory
 		this.inventory = new ArrayList<Item>();
 		this.game = game;
 		
-		this.game.getEventEngine().subscribe("item.take", new AddItem());
+		EventEngine.get().subscribe("item.take", new AddItem());
 	}
 	
 	public int size()
