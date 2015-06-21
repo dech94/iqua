@@ -77,7 +77,7 @@ public class IquaGame extends ApplicationAdapter {
 		this.managers = new ArrayList<EntityManager>();
 		this.itemManager = new ItemManager(this);
 		this.managers.add(this.itemManager);
-		this.itemManager.add(new Item(this.worlds.get(2), "images/Btn/BtnQuete.png", null, 300, 300, 100, 100, "test", "juste un test"));
+		this.itemManager.add(new Item(this.worlds.get(2), "images/Btn/btnQuete.png", null, 300, 300, 100, 100, "test", "juste un test"));
 	}
 	
 	public void createWorlds()
