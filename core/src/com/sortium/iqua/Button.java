@@ -30,7 +30,7 @@ public class Button implements Entity
 		public boolean execute(Event event) 
 		{
 			ClickEvent ce = (ClickEvent) event;
-
+			
 			if( Button.this.button.contains(ce.getX(), ce.getY()) 
 				&& Button.this.owner.getGame().getCurrentScene() == Button.this.owner
 				&& System.nanoTime() - Button.this.owner.getStartTime() >= 250000000l)

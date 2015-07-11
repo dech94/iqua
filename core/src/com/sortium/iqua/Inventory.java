@@ -22,7 +22,7 @@ public class Inventory
 			GetEvent<Item> get_item = (GetEvent<Item>)event;
 			Inventory.this.inventory.add(get_item.thing);
 			System.out.println("Un item a été ajouté -> " + get_item.thing.getName() + " :"+ get_item.thing.getDescription());//
-			return true;
+			return false;
 		}
 		
 	}

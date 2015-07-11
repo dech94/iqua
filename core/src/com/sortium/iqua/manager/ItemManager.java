@@ -20,7 +20,7 @@ public class ItemManager extends EntityManager
 			
 			ItemManager.this.remove(to_remove.thing);
 			
-			return true;
+			return false;
 		}
 		
 	}
