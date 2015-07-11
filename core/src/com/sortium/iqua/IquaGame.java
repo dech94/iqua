@@ -1,6 +1,7 @@
 package com.sortium.iqua;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -23,7 +24,8 @@ public class IquaGame extends ApplicationAdapter {
 	private Scene mainMenu;
 	private String current = "1";
 	private ArrayList<World> worlds;
-	private Scene currentScene;
+	private Stack<Scene> currentScenes;
+		
 	private Player player;
 	
 	// Manager
@@ -39,20 +41,22 @@ public class IquaGame extends ApplicationAdapter {
 			
 			if( sc.equals("mainMenu") )
 			{
-				IquaGame.this.currentScene = IquaGame.this.mainMenu;
+				IquaGame.this.replaceScene(IquaGame.this.mainMenu);
 				return true;
 			}
 			
 			if( sc.equals("quit") )
 			{
-				IquaGame.this.currentScene = null;
+				Gdx.app.exit();
 				return true;
 			}
 			
 			int num_sc = Integer.parseInt(sc) - 1;
 			Scene next = IquaGame.this.worlds.get(num_sc);
 			next.resetStartTime();
-			IquaGame.this.currentScene = next;
+			
+			IquaGame.this.replaceScene(next);
+			
 			System.out.println("load scene " + (num_sc+1));
 			current=Integer.toString(num_sc+1);
 			return true;
@@ -69,7 +73,8 @@ public class IquaGame extends ApplicationAdapter {
 		createWorlds();
 		
 		this.mainMenu = new MainMenu(this,current);
-		this.currentScene = this.mainMenu;
+		this.currentScenes = new Stack<Scene>();
+		this.currentScenes.push(this.mainMenu);
 		
 		EventEngine.get().subscribe("scene.change", new ChangeScene());
 		
@@ -98,9 +103,9 @@ public class IquaGame extends ApplicationAdapter {
 	
 	public void update()
 	{
-		if( this.currentScene != null )
+		if( !this.currentScenes.empty() )
 		{
-			this.currentScene.update();
+			this.currentScenes.peek().update();
 		}
 		
 		if( Gdx.input.isTouched() )
@@ -117,9 +122,9 @@ public class IquaGame extends ApplicationAdapter {
 	
 	public void display()
 	{
-		if( this.currentScene != null )
+		if( !this.currentScenes.empty())
 		{
-			this.currentScene.display(this.batch);
+			this.currentScenes.peek().display(this.batch);
 		}
 		
 		for( EntityManager manager : this.managers)
@@ -142,9 +147,20 @@ public class IquaGame extends ApplicationAdapter {
 
 	}
 
-	
 	public Scene getCurrentScene()
 	{
-		return this.currentScene;
+		if(this.currentScenes.empty()) return null;
+		return this.currentScenes.peek();
+	}
+	
+	public void replaceScene(Scene to_add)
+	{
+		this.currentScenes.push(to_add);
+	}
+	
+	public void superimposeScene(Scene to_add)
+	{
+		this.currentScenes.pop();
+		this.currentScenes.push(to_add);
 	}
 }
