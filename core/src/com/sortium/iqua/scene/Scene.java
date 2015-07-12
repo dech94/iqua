@@ -12,11 +12,13 @@ public class Scene
 	protected ArrayList<Entity> entities;
 	protected IquaGame game;
 	protected long startTime = System.nanoTime();
+	protected boolean ready;
 	
 	protected Texture background;
 	
 	public Scene(IquaGame game)
 	{
+		ready = false;
 		this.entities = new ArrayList<Entity>();
 		this.game = game;
 	}
@@ -55,6 +57,16 @@ public class Scene
 	public void resetStartTime()
 	{
 		this.startTime = System.nanoTime();
+	}
+	
+	public boolean isReady()
+	{
+		return this.ready;
+	}
+	
+	public void isReady(boolean b)
+	{
+		this.ready = b;
 	}
 	
 }

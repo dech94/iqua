@@ -1,6 +1,7 @@
 package com.sortium.iqua;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Stack;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -14,6 +15,7 @@ import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.EventEngine;
 import com.sortium.iqua.manager.EntityManager;
 import com.sortium.iqua.manager.ItemManager;
+import com.sortium.iqua.scene.InventoryMenu;
 import com.sortium.iqua.scene.MainMenu;
 import com.sortium.iqua.scene.Scene;
 import com.sortium.iqua.scene.World;
@@ -25,19 +27,43 @@ public class IquaGame extends ApplicationAdapter {
 	private String current = "1";
 	private ArrayList<World> worlds;
 	private Stack<Scene> currentScenes;
-		
+	private Stack<Scene> scenesToAdd;
+	private InventoryMenu inventoryMenu;
+	
 	private Player player;
 	
 	// Manager
 	private ArrayList<EntityManager> managers;
 	private ItemManager itemManager;
 	
+	private class PopScene implements EventListener
+	{
+
+		@Override
+		public boolean execute(Event event)
+		{
+			IquaGame.this.popCurrentScene();
+			return true;
+		}
+		
+	}
+	
+	private class PushInventory implements EventListener
+	{
+		@Override
+		public boolean execute(Event event) 
+		{
+			superimposeScene(IquaGame.this.inventoryMenu);
+			return true;
+		}
+		
+	}
 	private class ChangeScene implements EventListener
 	{
 		@Override
 		public boolean execute(Event event) 
 		{
-			String sc = ((ChangeSceneEvent)event).newScene;
+			String sc = ((ChangeSceneEvent)event).getNewScene();
 			
 			if( sc.equals("mainMenu") )
 			{
@@ -74,15 +100,19 @@ public class IquaGame extends ApplicationAdapter {
 		
 		this.mainMenu = new MainMenu(this,current);
 		this.currentScenes = new Stack<Scene>();
+		this.scenesToAdd = new Stack<Scene>();
 		this.currentScenes.push(this.mainMenu);
 		
 		EventEngine.get().subscribe("scene.change", new ChangeScene());
+		EventEngine.get().subscribe("scene.pop", new PopScene());
+		EventEngine.get().subscribe("scene.inventory", new PushInventory());
 		
 		// manager
 		this.managers = new ArrayList<EntityManager>();
 		this.itemManager = new ItemManager(this);
 		this.managers.add(this.itemManager);
 		this.itemManager.add(new Item(this.worlds.get(2), "images/Btn/btnQuete.png", null, 300, 300, 100, 100, "test", "juste un test"));
+		this.inventoryMenu = new InventoryMenu(this);
 	}
 	
 	public void createWorlds()
@@ -108,6 +138,11 @@ public class IquaGame extends ApplicationAdapter {
 			this.currentScenes.peek().update();
 		}
 		
+		for(Scene s : this.currentScenes)
+		{
+			s.update();
+		}
+		
 		if( Gdx.input.isTouched() )
 		{
 			Event event = new ClickEvent(Gdx.input.getX(), Gdx.input.getY());
@@ -118,6 +153,8 @@ public class IquaGame extends ApplicationAdapter {
 		{
 			manager.update();
 		}
+		
+	
 	}
 	
 	public void display()
@@ -125,6 +162,11 @@ public class IquaGame extends ApplicationAdapter {
 		if( !this.currentScenes.empty())
 		{
 			this.currentScenes.peek().display(this.batch);
+		}
+		
+		for(Scene s : this.currentScenes)
+		{
+			s.display(this.batch);
 		}
 		
 		for( EntityManager manager : this.managers)
@@ -153,14 +195,24 @@ public class IquaGame extends ApplicationAdapter {
 		return this.currentScenes.peek();
 	}
 	
+	public void popCurrentScene()
+	{
+		this.currentScenes.pop();
+	}
+	
 	public void replaceScene(Scene to_add)
 	{
+		this.currentScenes.pop();
 		this.currentScenes.push(to_add);
 	}
 	
 	public void superimposeScene(Scene to_add)
 	{
-		this.currentScenes.pop();
 		this.currentScenes.push(to_add);
+	}
+	
+	public void pushInventory()
+	{
+		superimposeScene(new InventoryMenu(IquaGame.this));
 	}
 }

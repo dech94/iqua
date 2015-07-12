@@ -15,9 +15,8 @@ public class MainMenu extends Menu
 	{
 		super(game);
 		
-		ChangeSceneEvent event = new ChangeSceneEvent();
-		event.newScene = current;
-		
+		ChangeSceneEvent event = new ChangeSceneEvent(current);
+				
 		this.background = new Texture(Gdx.files.internal("images/screenlaunch.png"));
 		this.demoBtn = new Button(this, "images/Btn/btndemo.png", null, (Gdx.graphics.getWidth()-100)/2, 3*(Gdx.graphics.getHeight()-32)/4, 96, 32, "scene.change", event );
 	}

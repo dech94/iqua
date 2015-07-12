@@ -39,4 +39,5 @@ public class Inventory
 	{
 		return this.inventory.size();
 	}
+
 }
