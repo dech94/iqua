@@ -11,7 +11,6 @@ public class ItemManager extends EntityManager
 {
 	private class RemoveItem implements EventListener
 	{
-
 		@Override
 		public boolean execute(Event event)
 		{
@@ -23,10 +22,9 @@ public class ItemManager extends EntityManager
 			{
 				ItemManager.this.remove(item);	
 			}
-			
+
 			return true;
 		}
-		
 	}
 	
 	public ItemManager(IquaGame game) 

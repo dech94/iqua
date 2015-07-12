@@ -13,15 +13,13 @@ public class Item extends Button implements Entity
 	
 	protected String description;
 	protected String name;
-	protected Item me = this;
 	protected long id;
-	protected boolean taken;
+	protected boolean taken;  
 	
 	public Item(Scene owner, String pathTexture, String pathSound, int x,
 			int y, int width, int height, String name, String description) 
 	{
 		super(owner, pathTexture, pathSound, x, y, width, height);
-		this.taken = false; 
 		
 		this.event = new GetEvent<Item>(this);
 		this.eventid = "item.take";
@@ -31,6 +29,8 @@ public class Item extends Button implements Entity
 		
 		Item.id_count++;
 		this.id = Item.id_count;
+		
+		this.taken = false;
 	}
 
 	@Override
@@ -59,15 +59,15 @@ public class Item extends Button implements Entity
 	{
 		return this.id;
 	}
-
-	public boolean isTaken()
+	
+	public boolean taken()
 	{
 		return this.taken;
 	}
 	
-	public void take()
+	public void taken(boolean b)
 	{
-		this.taken = true;
+		this.taken = b;
 	}
 	
 }

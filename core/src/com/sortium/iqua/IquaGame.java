@@ -6,6 +6,7 @@ import java.util.Stack;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.ClickEvent;
@@ -108,8 +109,11 @@ public class IquaGame extends ApplicationAdapter {
 		this.managers = new ArrayList<EntityManager>();
 		this.itemManager = new ItemManager(this);
 		this.managers.add(this.itemManager);
+		
 		this.itemManager.add(new Item(this.worlds.get(2), "images/Btn/btnQuete.png", null, 300, 300, 100, 100, "test", "juste un test"));
 		this.itemManager.add(new Item(this.worlds.get(0), "images/Btn/btnQuete.png", null, 300, 300, 100, 100, "test2", "juste un deuxième test"));
+		this.itemManager.add(new Item(this.worlds.get(0), "images/Btn/btnQuete.png", null, 150, 150, 50, 50, "Canard", "Un canard en forme de livre."));
+		
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 	}
 	
@@ -151,7 +155,6 @@ public class IquaGame extends ApplicationAdapter {
 		{
 			manager.update();
 		}
-		
 	
 	}
 	
@@ -171,6 +174,7 @@ public class IquaGame extends ApplicationAdapter {
 		{
 			manager.display(this.batch);
 		}
+		
 	}
 
 	@Override
@@ -195,17 +199,21 @@ public class IquaGame extends ApplicationAdapter {
 	
 	public void popCurrentScene()
 	{
+		if(this.currentScenes.empty()){ return; }
+		
+		this.currentScenes.peek().disable();
 		this.currentScenes.pop();
 	}
 	
 	public void replaceScene(Scene to_add)
 	{
-		this.currentScenes.pop();
-		this.currentScenes.push(to_add);
+		popCurrentScene();
+		superimposeScene(to_add);
 	}
 	
 	public void superimposeScene(Scene to_add)
 	{
+		to_add.enable();
 		this.currentScenes.push(to_add);
 	}
 	

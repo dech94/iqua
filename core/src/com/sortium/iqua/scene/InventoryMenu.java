@@ -1,19 +1,128 @@
 package com.sortium.iqua.scene;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.sortium.iqua.Button;
 import com.sortium.iqua.Inventory;
 import com.sortium.iqua.IquaGame;
+import com.sortium.iqua.Item;
+import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
+import com.sortium.iqua.event.EventEngine;
+import com.sortium.iqua.event.EventListener;
+import com.sortium.iqua.event.GetEvent;
 
 public class InventoryMenu extends Scene
 {
 	protected Vector2 pos;
 	protected Button quitBtn;
 	protected Inventory inventory;
+	protected BitmapFont bitmapFont;
+	protected Item currentItem;
+	protected ArrayList<Icon> icons;
+	
+	protected class AddIcon implements EventListener
+	{
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public boolean execute(Event event) {
+
+			GetEvent<Item> ge = (GetEvent<Item>)(event);
+			Item item = ge.thing;
+			Rectangle rect = new Rectangle();
+			
+			if( !item.taken() )
+			{
+				item.taken(true);
+				InventoryMenu.this.icons.add(new InventoryMenu.Icon(item, rect));
+			}
+			return true;
+		}
+		
+	}
+	
+	protected class Icon
+	{
+		protected Texture tex;
+		protected Rectangle rect;
+		protected Item item;
+		
+		public Icon(Item item, Rectangle rect)
+		{
+			this.item = item;
+			this.tex = this.item.getTexture();
+			this.rect = rect;
+			
+			initPosition();
+		}
+		
+		public Item getItem()
+		{
+			return this.item;
+		}
+		
+		public boolean contains(float cx,float cy)
+		{
+			int y = (int) (Gdx.graphics.getHeight() - cy);
+
+			return this.rect.contains(cx, y);
+		}
+		
+		public void initPosition()
+		{
+			this.rect.width = 32;
+			this.rect.height = 32;
+			this.rect.x = Gdx.graphics.getWidth()/8 + 10;
+			this.rect.y = 7*Gdx.graphics.getHeight()/8 - rect.height - 10;
+		}
+		
+		public void display(SpriteBatch sb)
+		{
+			int index = InventoryMenu.this.icons.indexOf(this);
+			
+			initPosition();
+			
+			this.rect.x += this.rect.width*(index%10)  + 10;
+			this.rect.y -= this.rect.height*((int) index/10) + 10;
+	
+			sb.draw(this.tex, this.rect.x, this.rect.y, this.rect.width, this.rect.height);
+		}
+		
+		public void move(int x, int y)
+		{
+			this.rect.x += x;
+			this.rect.y += y;
+		}
+	}
+	
+	protected class Clicked implements EventListener
+	{
+		@Override
+		public boolean execute(Event event)
+		{
+			if( InventoryMenu.this.activated == false ){ return true; }
+			
+			ClickEvent ce = (ClickEvent)event;
+			
+			for(InventoryMenu.Icon icon : InventoryMenu.this.icons)
+			{
+				if( icon.contains(ce.getX(), ce.getY()) )
+				{
+					InventoryMenu.this.currentItem = icon.getItem();
+				}
+			}
+			
+			return true;
+		}
+		
+	}
 	
 	public InventoryMenu(IquaGame game, Inventory inv)
 	{
@@ -31,6 +140,14 @@ public class InventoryMenu extends Scene
 		
 		this.quitBtn = new Button(this, "images/Btn/btnQuit.png", null, btnX, btnY, btnW, btnH, "scene.pop", new Event());
 		this.inventory = inv;
+		
+		this.bitmapFont = new BitmapFont();
+		this.currentItem = null;
+		
+		EventEngine.get().subscribe("input.click", new Clicked());
+		EventEngine.get().subscribe("item.take", new AddIcon());
+		
+		this.icons = new ArrayList<Icon>();
 	}
 	
 	public void display(SpriteBatch sb)
@@ -42,23 +159,33 @@ public class InventoryMenu extends Scene
 		
 		this.quitBtn.display(sb);
 		
-		/* DISPLAY ITEMS */
-		int item_w = 32;
-		int item_h = 32;
-		int item_x = 1*Gdx.graphics.getWidth()/8 + 10;
-		int item_y = 7*Gdx.graphics.getHeight()/8 - item_h - 10;
 		
-		for(int i=0; i < this.inventory.size(); i++)
+		for(Icon icon : this.icons)
 		{
-			//item_y += item_h * i;
-			sb.draw(this.inventory.getItem(i).getTexture(), item_x, item_y, item_w, item_h);
-			item_x += item_w + 5;
+			icon.display(sb);
+		}
+		
+		/* DISPLAY ITEM DESCRIPTION */
+		if( this.currentItem != null )
+		{
+			int bf_x = 39*Gdx.graphics.getWidth()/64;
+			int bf_y = 27*Gdx.graphics.getHeight()/32;
 			
-			if( i%9 == 8 )
+			String str_tmp = currentItem.getName() + ": " + currentItem.getDescription();
+			String str = "";
+			int str_limit = 28;
+			
+			for(int i=0; i< str_tmp.length(); i++)
 			{
-				item_x = 1*Gdx.graphics.getWidth()/8 + 10;
-				item_y -= item_h + 10;
+				if( i%(str_limit) == str_limit-1 )
+				{
+					str += '\n';
+				}
+				
+				str += str_tmp.charAt(i);
 			}
+			
+			this.bitmapFont.draw(sb, str, bf_x, bf_y);
 		}
 	}
 	

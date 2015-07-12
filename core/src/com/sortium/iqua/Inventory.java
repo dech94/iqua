@@ -2,6 +2,7 @@ package com.sortium.iqua;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventEngine;
 import com.sortium.iqua.event.EventListener;
@@ -21,7 +22,7 @@ public class Inventory
 			GetEvent<Item> get_item = (GetEvent<Item>)event;
 			Item item = get_item.thing;
 			
-			if( Inventory.this.inventory.indexOf(item) == -1)
+			if( Inventory.this.inventory.indexOf(item) == -1 )
 			{
 				Inventory.this.inventory.add(item);
 				System.out.println("Un item a été ajouté -> " + item.getName() + " :"+ get_item.thing.getDescription());//
