@@ -32,6 +32,7 @@ public abstract class Manager<T>
 	{
 		@SuppressWarnings("unchecked")
 		@Override
+		
 		public boolean execute(Event event) 
 		{
 			GetEvent<T> remove_event = (GetEvent<T>) event;

@@ -17,10 +17,14 @@ public class ItemManager extends EntityManager
 		{
 			@SuppressWarnings("unchecked")
 			GetEvent<Item> to_remove = (GetEvent<Item>)event;
+			Item item = to_remove.thing;
+
+			if(ItemManager.this.bucket.indexOf(item) !=-1)
+			{
+				ItemManager.this.remove(item);	
+			}
 			
-			ItemManager.this.remove(to_remove.thing);
-			
-			return false;
+			return true;
 		}
 		
 	}

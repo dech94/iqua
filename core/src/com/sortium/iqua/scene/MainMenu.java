@@ -24,7 +24,6 @@ public class MainMenu extends Menu
 	public void display(SpriteBatch sb)
 	{
 		//super.display(sb);
-		
 		sb.draw(this.background, 0, 0);
 		this.demoBtn.display(sb);
 	}

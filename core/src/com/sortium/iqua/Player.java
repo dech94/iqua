@@ -10,4 +10,9 @@ public class Player
 		this.inventory = new Inventory(game);
 		this.game = game;
 	}
+	
+	public Inventory getInventory()
+	{
+		return this.inventory;
+	}
 }

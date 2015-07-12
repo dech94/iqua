@@ -14,15 +14,20 @@ public class Inventory
 	
 	private class AddItem implements EventListener
 	{
-
 		@SuppressWarnings("unchecked")
 		@Override
 		public boolean execute(Event event)
 		{
 			GetEvent<Item> get_item = (GetEvent<Item>)event;
-			Inventory.this.inventory.add(get_item.thing);
-			System.out.println("Un item a été ajouté -> " + get_item.thing.getName() + " :"+ get_item.thing.getDescription());//
-			return false;
+			Item item = get_item.thing;
+			
+			if( Inventory.this.inventory.indexOf(item) == -1)
+			{
+				Inventory.this.inventory.add(item);
+				System.out.println("Un item a été ajouté -> " + item.getName() + " :"+ get_item.thing.getDescription());//
+			}
+			
+			return true;
 		}
 		
 	}
@@ -39,5 +44,10 @@ public class Inventory
 	{
 		return this.inventory.size();
 	}
-
+	
+	public Item getItem(int index)
+	{
+		return this.inventory.get(index);
+	}
+	
 }

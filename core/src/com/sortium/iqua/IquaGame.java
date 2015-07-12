@@ -1,7 +1,6 @@
 package com.sortium.iqua;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Stack;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -27,7 +26,6 @@ public class IquaGame extends ApplicationAdapter {
 	private String current = "1";
 	private ArrayList<World> worlds;
 	private Stack<Scene> currentScenes;
-	private Stack<Scene> scenesToAdd;
 	private InventoryMenu inventoryMenu;
 	
 	private Player player;
@@ -100,7 +98,6 @@ public class IquaGame extends ApplicationAdapter {
 		
 		this.mainMenu = new MainMenu(this,current);
 		this.currentScenes = new Stack<Scene>();
-		this.scenesToAdd = new Stack<Scene>();
 		this.currentScenes.push(this.mainMenu);
 		
 		EventEngine.get().subscribe("scene.change", new ChangeScene());
@@ -112,7 +109,8 @@ public class IquaGame extends ApplicationAdapter {
 		this.itemManager = new ItemManager(this);
 		this.managers.add(this.itemManager);
 		this.itemManager.add(new Item(this.worlds.get(2), "images/Btn/btnQuete.png", null, 300, 300, 100, 100, "test", "juste un test"));
-		this.inventoryMenu = new InventoryMenu(this);
+		this.itemManager.add(new Item(this.worlds.get(0), "images/Btn/btnQuete.png", null, 300, 300, 100, 100, "test2", "juste un deuxième test"));
+		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 	}
 	
 	public void createWorlds()
@@ -211,8 +209,4 @@ public class IquaGame extends ApplicationAdapter {
 		this.currentScenes.push(to_add);
 	}
 	
-	public void pushInventory()
-	{
-		superimposeScene(new InventoryMenu(IquaGame.this));
-	}
 }

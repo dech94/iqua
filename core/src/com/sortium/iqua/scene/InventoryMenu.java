@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.sortium.iqua.Button;
+import com.sortium.iqua.Inventory;
 import com.sortium.iqua.IquaGame;
 import com.sortium.iqua.event.Event;
 
@@ -12,8 +13,9 @@ public class InventoryMenu extends Scene
 {
 	protected Vector2 pos;
 	protected Button quitBtn;
+	protected Inventory inventory;
 	
-	public InventoryMenu(IquaGame game)
+	public InventoryMenu(IquaGame game, Inventory inv)
 	{
 		super(game);
 		this.background = new Texture(Gdx.files.internal("images/baseInventaire.png"));
@@ -28,6 +30,7 @@ public class InventoryMenu extends Scene
 		int btnY = 6*Gdx.graphics.getHeight()/8;
 		
 		this.quitBtn = new Button(this, "images/Btn/btnQuit.png", null, btnX, btnY, btnW, btnH, "scene.pop", new Event());
+		this.inventory = inv;
 	}
 	
 	public void display(SpriteBatch sb)
@@ -38,6 +41,25 @@ public class InventoryMenu extends Scene
 		}
 		
 		this.quitBtn.display(sb);
+		
+		/* DISPLAY ITEMS */
+		int item_w = 32;
+		int item_h = 32;
+		int item_x = 1*Gdx.graphics.getWidth()/8 + 10;
+		int item_y = 7*Gdx.graphics.getHeight()/8 - item_h - 10;
+		
+		for(int i=0; i < this.inventory.size(); i++)
+		{
+			//item_y += item_h * i;
+			sb.draw(this.inventory.getItem(i).getTexture(), item_x, item_y, item_w, item_h);
+			item_x += item_w + 5;
+			
+			if( i%9 == 8 )
+			{
+				item_x = 1*Gdx.graphics.getWidth()/8 + 10;
+				item_y -= item_h + 10;
+			}
+		}
 	}
 	
 	public void update()

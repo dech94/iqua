@@ -104,4 +104,9 @@ public class Button implements Entity
 		return this.owner;
 	}
 	
+	public Texture getTexture()
+	{
+		return this.buttonTexture;
+	}
+	
 }
