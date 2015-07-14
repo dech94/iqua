@@ -6,7 +6,6 @@ import java.util.Stack;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.ClickEvent;
@@ -30,7 +29,7 @@ public class IquaGame extends ApplicationAdapter {
 	private InventoryMenu inventoryMenu;
 	
 	private Player player;
-	private TextZone tz;
+
 	// Manager
 	private ArrayList<EntityManager> managers;
 	private ItemManager itemManager;
@@ -115,10 +114,6 @@ public class IquaGame extends ApplicationAdapter {
 		this.itemManager.add(new Item(this.worlds.get(0), "images/Btn/btnQuete.png", null, 150, 150, 50, 50, "Canard", "Un canard en forme de livre."));
 		
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
-		this.tz = new TextZone("Je pense donc je suis, disait le philosophe, "
-				+ "avant de réaliser qu'il ne pensait en fait pas."
-				+ "Ce fut pour lui très difficile à admettre, mais une fois qu'il eu"
-				+ " compris, ce fut une terrible revelation.");
 	}
 	
 	public void createWorlds()
@@ -159,7 +154,7 @@ public class IquaGame extends ApplicationAdapter {
 		{
 			manager.update();
 		}
-	
+
 	}
 	
 	public void display()
@@ -178,8 +173,6 @@ public class IquaGame extends ApplicationAdapter {
 		{
 			manager.display(this.batch);
 		}
-		
-		this.tz.display(batch);
 		
 	}
 

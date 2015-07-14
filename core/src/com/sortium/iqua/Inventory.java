@@ -1,8 +1,6 @@
 package com.sortium.iqua;
 
 import java.util.ArrayList;
-
-import com.badlogic.gdx.Gdx;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventEngine;
 import com.sortium.iqua.event.EventListener;

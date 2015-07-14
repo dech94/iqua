@@ -12,6 +12,7 @@ import com.sortium.iqua.Button;
 import com.sortium.iqua.Inventory;
 import com.sortium.iqua.IquaGame;
 import com.sortium.iqua.Item;
+import com.sortium.iqua.TextZone;
 import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventEngine;
@@ -26,6 +27,7 @@ public class InventoryMenu extends Scene
 	protected BitmapFont bitmapFont;
 	protected Item currentItem;
 	protected ArrayList<Icon> icons;
+	protected TextZone description;
 	
 	protected class AddIcon implements EventListener
 	{
@@ -148,6 +150,12 @@ public class InventoryMenu extends Scene
 		EventEngine.get().subscribe("item.take", new AddIcon());
 		
 		this.icons = new ArrayList<Icon>();
+		
+
+		this.description = new TextZone("",
+				new Rectangle(1215*Gdx.graphics.getWidth()/2048, 55*Gdx.graphics.getHeight()/64,
+						217, 217), 1f);
+		
 	}
 	
 	public void display(SpriteBatch sb)
@@ -165,33 +173,21 @@ public class InventoryMenu extends Scene
 			icon.display(sb);
 		}
 		
+		this.description.display(sb);
 		/* DISPLAY ITEM DESCRIPTION */
+		
 		if( this.currentItem != null )
 		{
-			int bf_x = 39*Gdx.graphics.getWidth()/64;
-			int bf_y = 27*Gdx.graphics.getHeight()/32;
-			
 			String str_tmp = currentItem.getName() + ": " + currentItem.getDescription();
-			String str = "";
-			int str_limit = 28;
+			this.description.setText(str_tmp);
 			
-			for(int i=0; i< str_tmp.length(); i++)
-			{
-				if( i%(str_limit) == str_limit-1 )
-				{
-					str += '\n';
-				}
-				
-				str += str_tmp.charAt(i);
-			}
-			
-			this.bitmapFont.draw(sb, str, bf_x, bf_y);
 		}
 	}
 	
 	public void update()
 	{
 		this.quitBtn.update();
+		this.description.update();
 	}
 	
 }
