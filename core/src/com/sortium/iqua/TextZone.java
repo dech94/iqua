@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 
 public class TextZone implements Entity
@@ -24,6 +22,7 @@ public class TextZone implements Entity
 	public TextZone(String str, Rectangle rect, float xScale, float yScale)
 	{
 		this.font = new BitmapFont();
+		this.font.setColor(Color.BLACK);
 		
 		this.rect = new Rectangle(rect.x, rect.y - rect.height, rect.width, rect.height);
 		

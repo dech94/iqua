@@ -109,9 +109,9 @@ public class IquaGame extends ApplicationAdapter {
 		this.itemManager = new ItemManager(this);
 		this.managers.add(this.itemManager);
 		
-		this.itemManager.add(new Item(this.worlds.get(2), "images/Btn/btnQuete.png", null, 300, 300, 100, 100, "test", "juste un test"));
-		this.itemManager.add(new Item(this.worlds.get(0), "images/Btn/btnQuete.png", null, 300, 300, 100, 100, "test2", "juste un deuxième test"));
-		this.itemManager.add(new Item(this.worlds.get(0), "images/Btn/btnQuete.png", null, 150, 150, 50, 50, "Canard", "Un canard en forme de livre."));
+		//items
+		this.itemManager.add(new Item(this.worlds.get(2), "images/Items/itmChardon.png", null, 200, 300, 100, 100, "Fleur de chardon", "Il s'agit d'une fleur de chardon."));
+		this.itemManager.add(new Item(this.worlds.get(0), "images/Items/itmPoupee.png", null, 300, 300, 100, 100, "Poupée", "Il s'agit d'une poupée."));
 		
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 	}
@@ -121,12 +121,12 @@ public class IquaGame extends ApplicationAdapter {
 		this.worlds.add(new World(this, "images/Background/screen1.png", "2", null, null,  null));
 		this.worlds.add(new World(this, "images/Background/screen2.png", "4", "1", null,  "3"));
 		this.worlds.add(new World(this, "images/Background/screen3.png", null, "2", null,  null));
-		this.worlds.add(new World(this, "images/Background/screen4.png", null, null, "5",  "2"));
+		this.worlds.add(new World(this, "images/Background/screen4.png", "5", "2", null,  null));
 		this.worlds.add(new World(this, "images/Background/screen5.png", null, "4",null, "6"));
 		this.worlds.add(new World(this, "images/Background/screen6.png", "7", "5", null,  null));
-		this.worlds.add(new World(this, "images/Background/screen7.png", null, null, "8",  "6"));
-		this.worlds.add(new World(this, "images/Background/screen8.png", null, "10", "9",  "7"));
-		this.worlds.add(new World(this, "images/Background/screen9.png", null, null, null,  "8"));
+		this.worlds.add(new World(this, "images/Background/screen7.png", "8", "6", null,  null));
+		this.worlds.add(new World(this, "images/Background/screen8.png", "9", "7", "10",  null));
+		this.worlds.add(new World(this, "images/Background/screen9.png", null, "8", null,  null));
 		this.worlds.add(new World(this, "images/Background/screen10.png", null, "8", null,  null));
 		this.worlds.add(new World(this, "images/work.png", null, null, null, null));
 		

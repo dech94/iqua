@@ -129,7 +129,7 @@ public class InventoryMenu extends Scene
 	public InventoryMenu(IquaGame game, Inventory inv)
 	{
 		super(game);
-		this.background = new Texture(Gdx.files.internal("images/baseInventaire.png"));
+		this.background = new Texture(Gdx.files.internal("images/inventory.png"));
 		
 		this.pos = new Vector2();
 		this.pos.x = (Gdx.graphics.getWidth() - this.background.getWidth())/2;
@@ -140,7 +140,7 @@ public class InventoryMenu extends Scene
 		int btnX = 3*Gdx.graphics.getWidth()/4 - btnW/2;
 		int btnY = 6*Gdx.graphics.getHeight()/8;
 		
-		this.quitBtn = new Button(this, "images/Btn/btnQuit.png", null, btnX, btnY, btnW, btnH, "scene.pop", new Event());
+		this.quitBtn = new Button(this, "images/Btn/btnClose.png", null, btnX, btnY, btnW, btnH, "scene.pop", new Event());
 		this.inventory = inv;
 		
 		this.bitmapFont = new BitmapFont();

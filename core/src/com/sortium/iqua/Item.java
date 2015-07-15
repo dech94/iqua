@@ -1,9 +1,6 @@
 package com.sortium.iqua;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sortium.iqua.event.Event;
-import com.sortium.iqua.event.EventEngine;
-import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.GetEvent;
 import com.sortium.iqua.scene.Scene;
 
