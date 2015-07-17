@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 
 public class TextZone implements Entity
@@ -17,22 +19,21 @@ public class TextZone implements Entity
 	protected String raw_str;
 	protected String render_str;
 	
-	protected int y_begin;
-	
+	protected int begin;
+
 	public TextZone(String str, Rectangle rect, float xScale, float yScale)
 	{
 		this.font = new BitmapFont();
 		this.font.setColor(Color.BLACK);
 		
+		this.begin = 0;
+		
 		this.rect = new Rectangle(rect.x, rect.y - rect.height, rect.width, rect.height);
 		
 		this.raw_str = str;
 		
-		this.y_begin = 0;
-		
 		setScale(xScale, yScale);
 		setText(this.raw_str);
-		
 	}
 	
 	public TextZone(String str, Rectangle rect, float xyScale)
@@ -63,73 +64,109 @@ public class TextZone implements Entity
 	public void setText(String str)
 	{
 		this.raw_str = str;
+		updateText();
+	}
+	
+	public void updateText()
+	{
 		this.words = this.raw_str.split(" ");
 		
 		GlyphLayout layout = new GlyphLayout();
 		
 		int x_offset = 0;
-		float y_offset = 0;
+		int line_nb= 0;
 		
 		this.render_str = "";
 		
-		for(int i=this.y_begin; i<this.words.length; i++)
+		for(int i=0; i<this.words.length; i++)
 		{	
 			layout.setText(this.font, this.words[i]+" ");
 			
+			// check if the word can be one the current line
 			if(x_offset + layout.width >= this.rect.width)
 			{
 				this.render_str += "\n";
 				x_offset = 0;
-				y_offset += this.font.getLineHeight() + layout.height;
-			}
-			
-			if( y_offset > this.rect.height )
-			{
-				break;
+				line_nb++;
+				
+				if(line_nb * (this.font.getLineHeight()) >= this.rect.height) 
+				{
+					break;
+				}
 			}
 			
 			this.render_str += " " + this.words[i];
 			x_offset += layout.width;
+			
 		}
 
+	}
+	
+	public int nthLine(int n)
+	{
+		int pos = 0;
+		int i = 0;
+		
+		while(i < n && pos != -1)
+		{
+			pos = this.render_str.indexOf('\n', pos+1);
+			i++;
+		}
+		
+		return pos+1;
+	}
+	
+	public int nbLine()
+	{
+		int n = 0;
+		for(int i=0; i<this.render_str.length(); i++)
+		{
+			if( this.render_str.charAt(i) == '\n' )
+			{
+				n++;
+			}
+		}
+		return n;
 	}
 	
 	@Override
 	public void display(SpriteBatch sb) 
 	{
-		this.font.draw(sb, this.render_str, this.rect.x, this.rect.y + this.rect.height);
-		
-		/*
-		 * POUR VOIR LA ZONE
-		 * ShapeRenderer sr = new ShapeRenderer();
-		sr.begin(ShapeType.Filled);
-		sr.setColor(Color.BLUE);
+		ShapeRenderer sr = new ShapeRenderer();
+
+		/*sr.begin(ShapeType.Filled);
+		sr.setColor(0, 1, 0, 1);
 		sr.rect(this.rect.x, this.rect.y, this.rect.width, this.rect.height);
 		sr.end();*/
-	
 		
-	}
-
-	public void scrollUp(int word_num)
-	{
-		this.y_begin-= word_num;
+		// where to begin the line
+		int begin_tmp = this.render_str.indexOf('\n');
+		String tmp = this.render_str;
 		
-		if( this.y_begin < 0 )
+		if(begin_tmp != -1)
 		{
-			this.y_begin = 0;
-		}
-		else
-		{
-			setText(this.raw_str);
+			tmp = this.render_str.substring(nthLine(this.begin), this.render_str.length());
 		}
 		
-		
+		this.font.draw(sb, tmp, this.rect.x, this.rect.y + this.rect.height);	
 	}
 	
-	public void scrollDown(int word_num)
+	public void scrollUp(int line)
 	{
-		this.y_begin += word_num;
-		setText(this.raw_str);
+		this.begin--;
+		
+		if(this.begin < 0)
+		{
+			this.begin = 0;
+		}
+	}
+	
+	public void scrollDown(int line)
+	{
+		if(this.begin+1 <= nbLine())
+		{
+			this.begin++;
+		}
 	}
 	
 	@Override

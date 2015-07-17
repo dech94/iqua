@@ -180,7 +180,6 @@ public class InventoryMenu extends Scene
 		{
 			String str_tmp = currentItem.getName() + ": " + currentItem.getDescription();
 			this.description.setText(str_tmp);
-			
 		}
 	}
 	
