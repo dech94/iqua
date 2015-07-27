@@ -62,12 +62,13 @@ project(":android") {
 
 project(":core") {
     apply plugin: "java"
-
+    sourceSets.test.java.srcDirs = ["test/"]
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        testCompile "junit:junit:+"
     }
 }
 
