@@ -34,7 +34,7 @@ public class TextZone implements Entity
 		
 		this.raw_str = str;
 		
-		this.scrollDelay = 250000000;
+		this.scrollDelay = 125000000;
 		this.scrollTimer = System.nanoTime();
 		
 		setScale(xScale, yScale);
@@ -187,15 +187,13 @@ public class TextZone implements Entity
 				
 				if(delta != 0)
 				{
-					if(delta >= 1)
+					if(delta > 0)
 					{
 						scrollUp(1);
-						delta = 0;
 					}
-					else if(delta <= -1)
+					else
 					{
 						scrollDown(1);
-						delta = 0;
 					}
 				}
 				
