@@ -154,7 +154,8 @@ public class IquaGame extends ApplicationAdapter {
 		{
 			manager.update();
 		}
-
+		
+		
 	}
 	
 	public void display()

@@ -177,7 +177,7 @@ public class TextZone implements Entity
 	@Override
 	public void update() 
 	{
-		if( Gdx.input.isTouched() 
+		if( Gdx.input.isTouched()
 				&& this.rect.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()))
 		{
 			

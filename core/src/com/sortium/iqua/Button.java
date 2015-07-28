@@ -33,7 +33,9 @@ public class Button implements Entity
 			
 			if( Button.this.button.contains(ce.getX(), ce.getY()) 
 				&& Button.this.owner.getGame().getCurrentScene() == Button.this.owner
-				&& System.nanoTime() - Button.this.owner.getStartTime() >= 250000000l)
+				&& System.nanoTime() - Button.this.owner.getStartTime() >= 250000000l
+				&& Gdx.input.getDeltaX() == 0 && Gdx.input.getDeltaY() == 0 
+				&& Gdx.input.justTouched() )
 			{
 				if( System.nanoTime() - Button.this.now >= Button.this.delay )
 				{
