@@ -20,7 +20,9 @@ public class TextZone implements Entity
 	protected String render_str;
 	
 	protected int begin;
-
+	protected long scrollDelay;
+	protected long scrollTimer;
+	
 	public TextZone(String str, Rectangle rect, float xScale, float yScale)
 	{
 		this.font = new BitmapFont();
@@ -31,6 +33,9 @@ public class TextZone implements Entity
 		this.rect = new Rectangle(rect.x, rect.y - rect.height, rect.width, rect.height);
 		
 		this.raw_str = str;
+		
+		this.scrollDelay = 250000000;
+		this.scrollTimer = System.nanoTime();
 		
 		setScale(xScale, yScale);
 		setText(this.raw_str);
@@ -148,7 +153,7 @@ public class TextZone implements Entity
 			tmp = this.render_str.substring(nthLine(this.begin), this.render_str.length());
 		}
 		
-		this.font.draw(sb, tmp, this.rect.x, this.rect.y + this.rect.height);	
+		this.font.draw(sb, tmp, this.rect.x, this.rect.y + this.rect.height-10);	
 	}
 	
 	public void scrollUp(int line)
@@ -175,18 +180,26 @@ public class TextZone implements Entity
 		if( Gdx.input.isTouched() 
 				&& this.rect.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()))
 		{
-			int delta = Gdx.input.getDeltaY();
 			
-			if(delta != 0)
+			if( System.nanoTime() - this.scrollTimer >= this.scrollDelay)
 			{
-				if(delta > 0)
+				int delta = Gdx.input.getDeltaY();
+				
+				if(delta != 0)
 				{
-					scrollUp(1);
+					if(delta >= 1)
+					{
+						scrollUp(1);
+						delta = 0;
+					}
+					else if(delta <= -1)
+					{
+						scrollDown(1);
+						delta = 0;
+					}
 				}
-				else
-				{
-					scrollDown(1);
-				}
+				
+				this.scrollTimer = System.nanoTime();
 			}
 
 		}
