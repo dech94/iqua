@@ -93,8 +93,8 @@ public class TextZone implements Entity
 				this.render_str += "\n";
 				x_offset = 0;
 				line_nb++;
-				
-				if(line_nb * (this.font.getLineHeight()) >= this.rect.height) 
+				System.out.println(this.begin);
+				if( (line_nb - begin) * (this.font.getLineHeight()) >= this.rect.height) 
 				{
 					break;
 				}
@@ -139,11 +139,6 @@ public class TextZone implements Entity
 	{
 		ShapeRenderer sr = new ShapeRenderer();
 
-		/*sr.begin(ShapeType.Filled);
-		sr.setColor(0, 1, 0, 1);
-		sr.rect(this.rect.x, this.rect.y, this.rect.width, this.rect.height);
-		sr.end();*/
-		
 		// where to begin the line
 		int begin_tmp = this.render_str.indexOf('\n');
 		String tmp = this.render_str;
@@ -164,6 +159,8 @@ public class TextZone implements Entity
 		{
 			this.begin = 0;
 		}
+		
+		updateText();
 	}
 	
 	public void scrollDown(int line)
@@ -172,11 +169,14 @@ public class TextZone implements Entity
 		{
 			this.begin++;
 		}
+		
+		updateText();
 	}
 	
 	@Override
 	public void update() 
-	{
+	{	
+	
 		if( Gdx.input.isTouched()
 				&& this.rect.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()))
 		{
