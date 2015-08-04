@@ -21,7 +21,6 @@ import com.sortium.iqua.event.GetEvent;
 
 public class InventoryMenu extends Scene
 {
-	protected Vector2 pos;
 	protected Button quitBtn;
 	protected Inventory inventory;
 	protected BitmapFont bitmapFont;
@@ -131,7 +130,6 @@ public class InventoryMenu extends Scene
 		super(game);
 		this.background = new Texture(Gdx.files.internal("images/inventory.png"));
 		
-		this.pos = new Vector2();
 		this.pos.x = (Gdx.graphics.getWidth() - this.background.getWidth())/2;
 		this.pos.y = (Gdx.graphics.getHeight() - this.background.getHeight())/2;
 		
@@ -160,10 +158,7 @@ public class InventoryMenu extends Scene
 	
 	public void display(SpriteBatch sb)
 	{
-		if( this.background != null )
-		{
-			sb.draw(this.background,this.pos.x, this.pos.y);
-		}
+		super.display(sb);
 		
 		this.quitBtn.display(sb);
 		

@@ -11,9 +11,12 @@ import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
+import com.sortium.iqua.event.GetEvent;
 import com.sortium.iqua.event.EventEngine;
+import com.sortium.iqua.manager.DialogueManager;
 import com.sortium.iqua.manager.EntityManager;
 import com.sortium.iqua.manager.ItemManager;
+import com.sortium.iqua.scene.DialogueMenu;
 import com.sortium.iqua.scene.InventoryMenu;
 import com.sortium.iqua.scene.MainMenu;
 import com.sortium.iqua.scene.Scene;
@@ -27,12 +30,14 @@ public class IquaGame extends ApplicationAdapter {
 	private ArrayList<World> worlds;
 	private Stack<Scene> currentScenes;
 	private InventoryMenu inventoryMenu;
+	private DialogueMenu dialogueMenu;
 	
 	private Player player;
 
 	// Manager
 	private ArrayList<EntityManager> managers;
 	private ItemManager itemManager;
+	private DialogueManager dialogueManager;
 	
 	private class PopScene implements EventListener
 	{
@@ -48,14 +53,33 @@ public class IquaGame extends ApplicationAdapter {
 	
 	private class PushInventory implements EventListener
 	{
+
 		@Override
 		public boolean execute(Event event) 
 		{
+			
 			superimposeScene(IquaGame.this.inventoryMenu);
 			return true;
 		}
 		
 	}
+	
+	private class PushDialogue implements EventListener
+	{
+		
+		@Override
+		public boolean execute(Event event) 
+		{
+			@SuppressWarnings("unchecked")
+			GetEvent<Dialogue> get = (GetEvent<Dialogue>)event;
+			IquaGame.this.dialogueMenu.setDialogue(get.thing);
+			
+			superimposeScene(IquaGame.this.dialogueMenu);
+			return true;
+		}
+		
+	}
+	
 	private class ChangeScene implements EventListener
 	{
 		@Override
@@ -91,29 +115,41 @@ public class IquaGame extends ApplicationAdapter {
 	@Override
 	public void create ()
 	{
+		// WORLD
 		batch = new SpriteBatch();		
 		this.player = new Player(this);
 		this.worlds = new ArrayList<World>();
 		createWorlds();
 		
+		// SCENE
 		this.mainMenu = new MainMenu(this,current);
 		this.currentScenes = new Stack<Scene>();
 		this.currentScenes.push(this.mainMenu);
 		
+		// SUBSCRIBE
 		EventEngine.get().subscribe("scene.change", new ChangeScene());
 		EventEngine.get().subscribe("scene.pop", new PopScene());
 		EventEngine.get().subscribe("scene.inventory", new PushInventory());
+		EventEngine.get().subscribe("scene.dialogue", new PushDialogue());
 		
-		// manager
+		// MANAGER
 		this.managers = new ArrayList<EntityManager>();
+		
 		this.itemManager = new ItemManager(this);
 		this.managers.add(this.itemManager);
 		
-		//items
+		this.dialogueManager = new DialogueManager(this);
+		this.managers.add(this.itemManager);
+	
+		// ITEM
 		this.itemManager.add(new Item(this.worlds.get(2), "images/Items/itmChardon.png", null, 200, 300, 100, 100, "Fleur de chardon", "Il s'agit d'une fleur de chardon."));
 		this.itemManager.add(new Item(this.worlds.get(0), "images/Items/itmPoupee.png", null, 300, 300, 100, 100, "Poupée", "Massa placerat duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat in ante metus, dictum at tempor commodo, ullamcorper a lacus vestibulum sed arcu non odio! Malesuada fames ac turpis egestas sed tempus. Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis vel eros donec ac odio tempor orci dapibus ultrices in. Tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus risus, at ultrices? Tortor consequat id porta nibh venenatis cras sed felis eget velit aliquet sagittis id consectetur purus ut faucibus pulvinar? Et netus et malesuada fames ac turpis egestas sed. Lectus urna duis convallis convallis tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet! Curabitur vitae nunc sed velit dignissim sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu. Ut tortor pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus, sed! Eu sem integer vitae justo eget! Odio eu feugiat pretium, nibh ipsum consequat nisl, vel pretium lectus quam id leo in vitae turpis massa sed elementum tempus egestas sed sed risus pretium quam vulputate."));
 		
+		// MENU
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
+		this.dialogueMenu = new DialogueMenu(this);
+		
+		this.dialogueManager.run(null);// TEST
 	}
 	
 	public void createWorlds()

@@ -66,7 +66,7 @@ public class Button implements Entity
 	public Button(Scene owner, String pathTexture, String pathSound, int x, int y, int width, int height, String eventid, Event event) 
 	{
 		this.owner = owner;
-		this.buttonTexture = new Texture (Gdx.files.internal(pathTexture));
+		this.buttonTexture = new Texture(Gdx.files.internal(pathTexture));
 		
 		try
 		{
