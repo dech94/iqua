@@ -93,8 +93,8 @@ public class TextZone implements Entity
 				this.render_str += "\n";
 				x_offset = 0;
 				line_nb++;
-				System.out.println(this.begin);
-				if( (line_nb - begin) * (this.font.getLineHeight()) >= this.rect.height) 
+
+				if( (line_nb - begin) * (this.font.getLineHeight()) > this.rect.height) 
 				{
 					break;
 				}

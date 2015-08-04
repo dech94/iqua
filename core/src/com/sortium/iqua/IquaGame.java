@@ -6,6 +6,7 @@ import java.util.Stack;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.ClickEvent;
@@ -149,7 +150,8 @@ public class IquaGame extends ApplicationAdapter {
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 		this.dialogueMenu = new DialogueMenu(this);
 		
-		this.dialogueManager.run(null);// TEST
+		this.dialogueManager.run(new Dialogue(new NPC("Test", "Test", 'M', Status.Villager,
+			new Texture(Gdx.files.internal("images/Characters/test.png"))	)));// TEST
 	}
 	
 	public void createWorlds()

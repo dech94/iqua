@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.sortium.iqua.Button;
 import com.sortium.iqua.Dialogue;
 import com.sortium.iqua.IquaGame;
+import com.sortium.iqua.NPC;
 import com.sortium.iqua.TextZone;
 import com.sortium.iqua.event.Event;
 
@@ -30,17 +31,20 @@ public class DialogueMenu extends Scene
 		// QUIT BUTTON
 		int btnW = 96;
 		int btnH = 32;
-		int btnX = 3*Gdx.graphics.getWidth()/4 - btnW/2;
-		int btnY = 6*Gdx.graphics.getHeight()/8;
+		int btnX = Gdx.graphics.getWidth() - btnW;
+		int btnY = (Gdx.graphics.getHeight() - btnH);
+
 		this.quitBtn = new Button(this, "images/Btn/btnClose.png", null, btnX, btnY, btnW, btnH, "scene.pop", new Event());
 	
 		// TEXT ZONE
 		int bg_x = (Gdx.graphics.getWidth()-this.background.getWidth())/2;
-		int bg_y = Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() - this.background.getHeight())/2;
+		int bg_y = 10 + (Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() - this.background.getHeight())/2);
+		
+		bg_y -= 2*(this.background.getHeight())/3;
 		
 		this.text = new TextZone("test",
 				new Rectangle(bg_x, bg_y,
-						this.background.getWidth(), this.background.getHeight()), 1f);
+						this.background.getWidth(), 7*(this.background.getHeight()/3)/8), 1f);
 		
 		this.text.setText("Aliquam etiam erat velit, scelerisque in dictum non, consectetur"
 				+ " a erat nam at lectus urna duis convallis convallis tellus, id! Nunc lobortis "
@@ -107,6 +111,17 @@ public class DialogueMenu extends Scene
 		super.display(sb);
 		this.text.display(sb);
 		this.quitBtn.display(sb);
+		
+		NPC npc = this.dialogue.getNPC();
+		if( npc != null )
+		{
+			int n_w = this.background.getWidth()/2;
+			int n_h = 2*this.background.getHeight()/3;
+			int n_x = (Gdx.graphics.getWidth() - this.background.getWidth())/2;
+			int n_y = Gdx.graphics.getHeight() - n_h - (Gdx.graphics.getHeight() - this.background.getHeight())/2;
+			
+			npc.display(sb, n_x, n_y, n_w, n_h);
+		}
 	}
 	
 	@Override

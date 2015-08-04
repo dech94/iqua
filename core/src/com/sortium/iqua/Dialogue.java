@@ -40,10 +40,17 @@ public class Dialogue
 	}
 	
 	protected ArrayList<Sentence> sentences;
+	protected NPC npc;
 	
-	public Dialogue()
+	public Dialogue(NPC npc)
 	{
 		sentences = new ArrayList<Sentence>();
+		this.npc = npc;
+	}
+	
+	public NPC getNPC()
+	{
+		return this.npc;
 	}
 	
 	
