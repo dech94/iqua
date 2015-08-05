@@ -81,8 +81,8 @@ public class InventoryMenu extends Scene
 		{
 			this.rect.width = 32;
 			this.rect.height = 32;
-			this.rect.x = Gdx.graphics.getWidth()/8 + 10;
-			this.rect.y = 7*Gdx.graphics.getHeight()/8 - rect.height - 10;
+			this.rect.x = InventoryMenu.this.game.getWidth()/8 + 10;
+			this.rect.y = 7*InventoryMenu.this.game.getHeight()/8 - rect.height - 10;
 		}
 		
 		public void display(SpriteBatch sb, OrthographicCamera camera)
@@ -131,13 +131,15 @@ public class InventoryMenu extends Scene
 		super(game);
 		this.background = new Texture(Gdx.files.internal("images/inventory.png"));
 		
-		this.pos.x = (Gdx.graphics.getWidth() - this.background.getWidth())/2;
-		this.pos.y = (Gdx.graphics.getHeight() - this.background.getHeight())/2;
+		setSize((int)(game.getWidth()*0.75), (int)(game.getHeight()*0.75));
+		
+		this.pos.x = (game.getWidth() - this.size.x)/2;
+		this.pos.y = (game.getHeight() - this.size.y)/2;
 		
 		int btnW = 96;
 		int btnH = 32;
-		int btnX = 3*Gdx.graphics.getWidth()/4 - btnW/2;
-		int btnY = 6*Gdx.graphics.getHeight()/8;
+		int btnX = 3*game.getWidth()/4 - btnW/2;
+		int btnY = 6*game.getHeight()/8;
 		
 		this.quitBtn = new Button(this, "images/Btn/btnClose.png", null, btnX, btnY, btnW, btnH, "scene.pop", new Event());
 		this.inventory = inv;
@@ -152,7 +154,7 @@ public class InventoryMenu extends Scene
 		
 
 		this.description = new TextZone("",
-				new Rectangle(1215*Gdx.graphics.getWidth()/2048, 55*Gdx.graphics.getHeight()/64,
+				new Rectangle(1215*game.getWidth()/2048, 55*game.getHeight()/64,
 						217, 217), 1f);
 		
 	}
@@ -160,7 +162,7 @@ public class InventoryMenu extends Scene
 	public void display(SpriteBatch sb, OrthographicCamera camera)
 	{
 		super.display(sb, camera);
-		
+
 		this.quitBtn.display(sb, camera);
 		
 		

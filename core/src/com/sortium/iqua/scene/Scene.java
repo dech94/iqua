@@ -17,6 +17,7 @@ public class Scene implements Entity
 
 	protected boolean activated;
 	protected Vector2 pos;
+	protected Vector2 size;
 	
 	protected Texture background;
 	
@@ -27,6 +28,7 @@ public class Scene implements Entity
 		this.entities = new ArrayList<Entity>();
 		this.game = game;
 		this.pos = new Vector2(0, 0);
+		this.size = new Vector2(0, 0);
 	}
 	
 	public void update()
@@ -34,6 +36,23 @@ public class Scene implements Entity
 		for( Entity entity : this.entities )
 		{
 			entity.update();
+		}
+	}
+	
+	void setSize(int w, int h)
+	{
+		this.size = new Vector2(w, h);
+	}
+	
+	void setSizeToBackground()
+	{
+		try
+		{
+			setSize(this.background.getWidth(), this.background.getHeight());
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 	
@@ -54,7 +73,14 @@ public class Scene implements Entity
 	{
 		if( this.background != null )
 		{
-			sb.draw(this.background,pos.x, pos.y);
+			if( size.x == 0 && size.y == 0 )
+			{
+				sb.draw(this.background,pos.x, pos.y);
+			}
+			else
+			{
+				sb.draw(this.background,pos.x, pos.y, size.x, size.y);
+			}
 		}
 		
 		for( Entity entity : this.entities )
