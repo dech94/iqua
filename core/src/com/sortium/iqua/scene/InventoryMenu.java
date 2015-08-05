@@ -3,6 +3,7 @@ package com.sortium.iqua.scene;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -84,7 +85,7 @@ public class InventoryMenu extends Scene
 			this.rect.y = 7*Gdx.graphics.getHeight()/8 - rect.height - 10;
 		}
 		
-		public void display(SpriteBatch sb)
+		public void display(SpriteBatch sb, OrthographicCamera camera)
 		{
 			int index = InventoryMenu.this.icons.indexOf(this);
 			
@@ -156,19 +157,19 @@ public class InventoryMenu extends Scene
 		
 	}
 	
-	public void display(SpriteBatch sb)
+	public void display(SpriteBatch sb, OrthographicCamera camera)
 	{
-		super.display(sb);
+		super.display(sb, camera);
 		
-		this.quitBtn.display(sb);
+		this.quitBtn.display(sb, camera);
 		
 		
 		for(Icon icon : this.icons)
 		{
-			icon.display(sb);
+			icon.display(sb, camera);
 		}
 		
-		this.description.display(sb);
+		this.description.display(sb, camera);
 		/* DISPLAY ITEM DESCRIPTION */
 		
 		if( this.currentItem != null )

@@ -2,6 +2,7 @@ package com.sortium.iqua;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -135,7 +136,7 @@ public class TextZone implements Entity
 	}
 	
 	@Override
-	public void display(SpriteBatch sb) 
+	public void display(SpriteBatch sb, OrthographicCamera camera) 
 	{
 		ShapeRenderer sr = new ShapeRenderer();
 
@@ -201,6 +202,12 @@ public class TextZone implements Entity
 			}
 
 		}
+	}
+
+	@Override
+	public void resize(int w, int h) 
+	{
+		
 	}
 
 }

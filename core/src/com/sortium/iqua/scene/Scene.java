@@ -2,13 +2,14 @@ package com.sortium.iqua.scene;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.sortium.iqua.Entity;
 import com.sortium.iqua.IquaGame;
 
-public class Scene
+public class Scene implements Entity
 {
 	protected ArrayList<Entity> entities;
 	protected IquaGame game;
@@ -36,7 +37,20 @@ public class Scene
 		}
 	}
 	
-	public void display(SpriteBatch sb)
+	public void fullDisplay(SpriteBatch sb, OrthographicCamera camera)
+	{
+		if( this.background != null )
+		{
+			sb.draw(this.background,pos.x, pos.y, camera.viewportWidth, camera.viewportHeight);
+		}
+		
+		for( Entity entity : this.entities )
+		{
+			entity.display(sb, camera);
+		}
+	}
+	
+	public void display(SpriteBatch sb, OrthographicCamera camera)
 	{
 		if( this.background != null )
 		{
@@ -45,7 +59,7 @@ public class Scene
 		
 		for( Entity entity : this.entities )
 		{
-			entity.display(sb);
+			entity.display(sb, camera);
 		}
 	}
 	
@@ -77,5 +91,11 @@ public class Scene
 		this.ready = b;
 	}
 	*/
+
+	@Override
+	public void resize(int w, int h) 
+	{
+		
+	}
 	
 }

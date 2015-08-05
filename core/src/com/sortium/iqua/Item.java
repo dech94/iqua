@@ -1,5 +1,6 @@
 package com.sortium.iqua;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.event.GetEvent;
 import com.sortium.iqua.scene.Scene;
@@ -31,9 +32,9 @@ public class Item extends Button implements Entity
 	}
 
 	@Override
-	public void display(SpriteBatch sb)
+	public void display(SpriteBatch sb, OrthographicCamera camera)
 	{
-		super.display(sb);
+		super.display(sb, camera);
 	}
 
 	@Override

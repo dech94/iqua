@@ -2,9 +2,11 @@ package com.sortium.iqua;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
@@ -90,9 +92,12 @@ public class Button implements Entity
 	}
 	
 	@Override
-	public void display(SpriteBatch sb) 
+	public void display(SpriteBatch sb, OrthographicCamera camera) 
 	{
-		sb.draw(buttonTexture,this.button.x , Gdx.graphics.getHeight() - this.button.y - this.button.height , this.button.width , this.button.height);
+		Vector3 v = new Vector3(this.button.x, camera.viewportHeight - this.button.y, 0);
+		camera.project(v);
+		
+		sb.draw(buttonTexture, v.x , v.y - this.button.height , this.button.width , this.button.height);
 	}
 
 	@Override
@@ -109,6 +114,12 @@ public class Button implements Entity
 	public Texture getTexture()
 	{
 		return this.buttonTexture;
+	}
+
+	@Override
+	public void resize(int w, int h) 
+	{
+		
 	}
 	
 }

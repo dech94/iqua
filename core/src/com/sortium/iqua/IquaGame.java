@@ -5,9 +5,15 @@ import java.util.Stack;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
@@ -39,6 +45,10 @@ public class IquaGame extends ApplicationAdapter {
 	private ArrayList<EntityManager> managers;
 	private ItemManager itemManager;
 	private DialogueManager dialogueManager;
+	
+
+	private OrthographicCamera camera;
+
 	
 	private class PopScene implements EventListener
 	{
@@ -116,12 +126,18 @@ public class IquaGame extends ApplicationAdapter {
 	@Override
 	public void create ()
 	{
+		// STAGE && VIEWPORT & CAMERA
+		this.camera = new OrthographicCamera();
+		this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+				
 		// WORLD
 		batch = new SpriteBatch();		
 		this.player = new Player(this);
 		this.worlds = new ArrayList<World>();
 		createWorlds();
 		
+		
+				
 		// SCENE
 		this.mainMenu = new MainMenu(this,current);
 		this.currentScenes = new Stack<Scene>();
@@ -150,8 +166,8 @@ public class IquaGame extends ApplicationAdapter {
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 		this.dialogueMenu = new DialogueMenu(this);
 		
-		this.dialogueManager.run(new Dialogue(new NPC("Test", "Test", 'M', Status.Villager,
-			new Texture(Gdx.files.internal("images/Characters/test.png"))	)));// TEST
+		/*this.dialogueManager.run(new Dialogue(new NPC("Test", "Test", 'M', Status.Villager,
+			new Texture(Gdx.files.internal("images/Characters/test.png"))	)));// TEST*/
 	}
 	
 	public void createWorlds()
@@ -170,8 +186,19 @@ public class IquaGame extends ApplicationAdapter {
 		
 	}
 	
+	public void resize(int width, int height)
+	{
+		this.camera.setToOrtho(false, width, height);
+		for(Scene scene : this.worlds)
+		{
+			scene.resize(width, height);
+		}
+	}
+	
 	public void update()
 	{
+		this.camera.update();
+
 		if( !this.currentScenes.empty() )
 		{
 			this.currentScenes.peek().update();
@@ -184,7 +211,11 @@ public class IquaGame extends ApplicationAdapter {
 		
 		if( Gdx.input.isTouched() )
 		{
-			Event event = new ClickEvent(Gdx.input.getX(), Gdx.input.getY());
+			Vector3 vec = new Vector3();
+			vec.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			this.camera.project(vec);
+			
+			Event event = new ClickEvent((int)vec.x, (int)vec.y);
 			EventEngine.get().trigger("input.click", event);
 		}
 		
@@ -200,17 +231,17 @@ public class IquaGame extends ApplicationAdapter {
 	{
 		if( !this.currentScenes.empty())
 		{
-			this.currentScenes.peek().display(this.batch);
+			this.currentScenes.peek().display(this.batch, this.camera);
 		}
 		
 		for(Scene s : this.currentScenes)
 		{
-			s.display(this.batch);
+			s.display(this.batch, this.camera);
 		}
 		
 		for( EntityManager manager : this.managers)
 		{
-			manager.display(this.batch);
+			manager.display(this.batch, this.camera);
 		}
 		
 	}
@@ -222,10 +253,10 @@ public class IquaGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		update();
-		
-		batch.begin();
+		this.batch.setProjectionMatrix(this.camera.combined);
+		this.batch.begin();
 		display();
-		batch.end();
+		this.batch.end();
 
 	}
 
@@ -253,6 +284,16 @@ public class IquaGame extends ApplicationAdapter {
 	{
 		to_add.enable();
 		this.currentScenes.push(to_add);
+	}
+	
+	public int getWidth()
+	{
+		return (int) this.camera.viewportWidth;
+	}
+	
+	public int getHeight()
+	{
+		return (int) this.camera.viewportHeight;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.sortium.iqua.manager;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.Button;
 import com.sortium.iqua.Entity;
@@ -14,7 +15,7 @@ public class EntityManager extends Manager<Entity> implements Entity
 	}
 
 	@Override
-	public void display(SpriteBatch sb) 
+	public void display(SpriteBatch sb, OrthographicCamera camera) 
 	{
 		for( Entity entity : this.bucket)
 		{
@@ -24,13 +25,13 @@ public class EntityManager extends Manager<Entity> implements Entity
 				
 				if( this.game.getCurrentScene() == b.getScene() )
 				{
-					entity.display(sb);
+					entity.display(sb, camera);
 				}
 				
 			}
 			else
 			{
-				entity.display(sb);
+				entity.display(sb, camera);
 			}
 		}
 	}
@@ -42,6 +43,12 @@ public class EntityManager extends Manager<Entity> implements Entity
 		{
 			entity.update();
 		}
+	}
+
+	@Override
+	public void resize(int w, int h)
+	{
+		
 	}
 	
 	

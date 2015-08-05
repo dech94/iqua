@@ -1,5 +1,6 @@
 package com.sortium.iqua;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -29,7 +30,7 @@ public class NPC implements Entity
 	}
 	
 	@Override
-	public void display(SpriteBatch sb)
+	public void display(SpriteBatch sb, OrthographicCamera camera)
 	{
 		if( this.photo != null )
 		{
@@ -39,6 +40,12 @@ public class NPC implements Entity
 
 	@Override
 	public void update()
+	{
+		
+	}
+
+	@Override
+	public void resize(int w, int h)
 	{
 		
 	}

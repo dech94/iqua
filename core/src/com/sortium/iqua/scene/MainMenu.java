@@ -1,6 +1,7 @@
 package com.sortium.iqua.scene;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.Button;
@@ -18,14 +19,14 @@ public class MainMenu extends Menu
 		ChangeSceneEvent event = new ChangeSceneEvent(current);
 				
 		this.background = new Texture(Gdx.files.internal("images/screenlaunch.png"));
-		this.demoBtn = new Button(this, "images/Btn/btndemo.png", null, (Gdx.graphics.getWidth()-100)/2, 3*(Gdx.graphics.getHeight()-32)/4, 96, 32, "scene.change", event );
+		this.demoBtn = new Button(this, "images/Btn/btndemo.png", null, (this.game.getWidth()-100)/2, 3*(this.game.getHeight()-32)/4, 96, 32, "scene.change", event );
 	}
 	
-	public void display(SpriteBatch sb)
+	
+	public void display(SpriteBatch sb, OrthographicCamera camera)
 	{
-		//super.display(sb);
-		sb.draw(this.background, 0, 0);
-		this.demoBtn.display(sb);
+		super.fullDisplay(sb, camera);
+		this.demoBtn.display(sb, camera);
 	}
 	
 	

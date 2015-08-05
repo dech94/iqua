@@ -1,14 +1,11 @@
 package com.sortium.iqua.scene;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sortium.iqua.Button;
-import com.sortium.iqua.Entity;
 import com.sortium.iqua.Interface;
 import com.sortium.iqua.IquaGame;
-import com.sortium.iqua.event.ChangeSceneEvent;
-import com.sortium.iqua.event.Event;
 
 public class World extends Scene
 {
@@ -19,21 +16,27 @@ public class World extends Scene
 	{
 		super(game);
 		this.background = new Texture(Gdx.files.internal(img_path));
-		this.inter = new Interface(this, img_path, up, down, left, right);
+		this.inter = new Interface(this.game, this, img_path, up, down, left, right);
 		
 		
 	}
 	
-	public void display(SpriteBatch sb)
+	public void display(SpriteBatch sb, OrthographicCamera camera)
 	{
-		super.display(sb);
-		this.inter.display(sb);
+		super.fullDisplay(sb, camera);
+		this.inter.display(sb, camera);
 	}
 	
 	public void update()
 	{
 		super.update();
-		this.inter.update();
+		//this.inter.update();
+	}
+	
+	@Override
+	public void resize(int w,int h)
+	{
+		this.inter.resize(w, h);
 	}
 
 }

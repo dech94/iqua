@@ -1,6 +1,7 @@
 package com.sortium.iqua.scene;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -106,19 +107,19 @@ public class DialogueMenu extends Scene
 	}
 	
 	@Override
-	public void display(SpriteBatch sb)
+	public void display(SpriteBatch sb, OrthographicCamera camera)
 	{
-		super.display(sb);
-		this.text.display(sb);
-		this.quitBtn.display(sb);
+		super.display(sb, camera);
+		this.text.display(sb, camera);
+		this.quitBtn.display(sb, camera);
 		
 		NPC npc = this.dialogue.getNPC();
 		if( npc != null )
 		{
 			int n_w = this.background.getWidth()/2;
 			int n_h = 2*this.background.getHeight()/3;
-			int n_x = (Gdx.graphics.getWidth() - this.background.getWidth())/2;
-			int n_y = Gdx.graphics.getHeight() - n_h - (Gdx.graphics.getHeight() - this.background.getHeight())/2;
+			int n_x = (this.game.getWidth() - this.background.getWidth())/2;
+			int n_y = this.game.getHeight() - n_h - (this.game.getHeight() - this.background.getHeight())/2;
 			
 			npc.display(sb, n_x, n_y, n_w, n_h);
 		}
