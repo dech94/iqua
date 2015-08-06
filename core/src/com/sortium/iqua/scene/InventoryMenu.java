@@ -155,7 +155,7 @@ public class InventoryMenu extends Scene
 
 		this.description = new TextZone("",
 				new Rectangle(1215*game.getWidth()/2048, 55*game.getHeight()/64,
-						217, 217), 1f);
+						(int)(this.size.x/3), (int)(this.size.y/2)), 1f);
 		
 	}
 	
