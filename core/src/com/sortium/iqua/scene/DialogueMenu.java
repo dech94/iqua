@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.sortium.iqua.Button;
 import com.sortium.iqua.Dialogue;
 import com.sortium.iqua.IquaGame;
@@ -23,29 +24,31 @@ public class DialogueMenu extends Scene
 	{
 		super(game);
 		this.background = new Texture(Gdx.files.internal("images/dialogue.png"));
+		this.size = new Vector2(0.75f*this.game.getWidth(), 0.75f*this.game.getHeight());
+		
 		this.dialogue = null;
 		
 		// POSITION
-		this.pos.x = (Gdx.graphics.getWidth() - this.background.getWidth())/2;
-		this.pos.y = (Gdx.graphics.getHeight() - this.background.getHeight())/2;
+		this.pos.x = (this.game.getWidth() - this.size.x)/2;
+		this.pos.y = (this.game.getHeight() - this.size.y)/2;
 		
 		// QUIT BUTTON
 		int btnW = 96;
 		int btnH = 32;
-		int btnX = Gdx.graphics.getWidth() - btnW;
-		int btnY = (Gdx.graphics.getHeight() - btnH);
+		int btnX = this.game.getWidth() - btnW;
+		int btnY = (this.game.getHeight() - btnH);
 
 		this.quitBtn = new Button(this, "images/Btn/btnClose.png", null, btnX, btnY, btnW, btnH, "scene.pop", new Event());
 	
 		// TEXT ZONE
-		int bg_x = (Gdx.graphics.getWidth()-this.background.getWidth())/2;
-		int bg_y = 10 + (Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() - this.background.getHeight())/2);
+		int bg_x = (int) ((this.game.getWidth()-this.size.x)/2);
+		int bg_y = (int) (10 + (this.game.getHeight() - (this.game.getHeight() - this.size.y)/2));
 		
-		bg_y -= 2*(this.background.getHeight())/3;
+		bg_y -= 2*(this.size.y)/3;
 		
 		this.text = new TextZone("test",
 				new Rectangle(bg_x, bg_y,
-						this.background.getWidth(), 7*(this.background.getHeight()/3)/8), 1f);
+						this.size.x, 7*(this.size.y/3)/8), 1f);
 		
 		this.text.setText("Aliquam etiam erat velit, scelerisque in dictum non, consectetur"
 				+ " a erat nam at lectus urna duis convallis convallis tellus, id! Nunc lobortis "
@@ -116,10 +119,10 @@ public class DialogueMenu extends Scene
 		NPC npc = this.dialogue.getNPC();
 		if( npc != null )
 		{
-			int n_w = this.background.getWidth()/2;
-			int n_h = 2*this.background.getHeight()/3;
-			int n_x = (this.game.getWidth() - this.background.getWidth())/2;
-			int n_y = this.game.getHeight() - n_h - (this.game.getHeight() - this.background.getHeight())/2;
+			int n_w = (int) (this.size.x/2);
+			int n_h = (int) (2*this.size.y/3);
+			int n_x = (int) ((this.game.getWidth() - this.size.x)/2);
+			int n_y = (int) (this.game.getHeight() - n_h - (this.game.getHeight() - this.size.y)/2);
 			
 			npc.display(sb, n_x, n_y, n_w, n_h);
 		}

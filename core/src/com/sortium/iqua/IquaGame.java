@@ -169,7 +169,7 @@ public class IquaGame extends ApplicationAdapter {
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 		this.dialogueMenu = new DialogueMenu(this);
 		
-		/*this.dialogueManager.run(new Dialogue(new NPC("Test", "Test", 'M', Status.Villager,
+		this.dialogueManager.run(new Dialogue(new NPC("Test", "Test", 'M', Status.Villager,
 			new Texture(Gdx.files.internal("images/Characters/test.png"))	)));// TEST*/
 	}
 	
