@@ -1,51 +1,27 @@
 package com.sortium.iqua;
 
 import java.util.ArrayList;
-import com.badlogic.gdx.utils.Json;
 
 public class Dialogue 
 {
-	// what the player can respond to the npc
-	protected class Response
-	{
-		protected String message;
-		protected Sentence next;
-		
-		public Response(String msg, Sentence next)
-		{
-			this.message = msg;
-			this.next = next;
-		}
-	}
-	
-	// what the npc say
-	protected class Sentence
-	{
-		protected int id;
-		protected String message;
-		protected ArrayList<Response> responses;
-		
-		public Sentence(String message, ArrayList<Response> responses)
-		{
-			this.message = message;
-			this.id = this.message.hashCode();
-			this.responses = responses;
-			
-		}
-		
-		public Sentence(String message)
-		{
-			this(message, null);
-		}
-	}
-	
 	protected ArrayList<Sentence> sentences;
 	protected NPC npc;
+	protected Sentence currentSentence;
 	
 	public Dialogue(NPC npc)
 	{
 		sentences = new ArrayList<Sentence>();
 		this.npc = npc;
+		this.currentSentence = null;
+	}
+	
+	public void addSentences(String msg, ArrayList<Response> responses)
+	{
+		Sentence s = new Sentence(msg, responses);
+		this.sentences.add(s);
+		
+		this.currentSentence = this.sentences.get(0);
+		
 	}
 	
 	public NPC getNPC()
@@ -53,7 +29,14 @@ public class Dialogue
 		return this.npc;
 	}
 	
+	public ArrayList<Sentence> getSentences()
+	{
+		return this.sentences;
+	}
 	
-	
+	public Sentence getCurrentSentence()
+	{
+		return this.currentSentence;
+	}
 	
 }

@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.sortium.iqua.Button;
 import com.sortium.iqua.Inventory;
 import com.sortium.iqua.IquaGame;
@@ -70,12 +69,20 @@ public class InventoryMenu extends Scene
 			return this.item;
 		}
 		
-		public boolean contains(float cx,float cy)
+		/*public boolean contains(float cx,float cy)
 		{
-			int y = (int) (Gdx.graphics.getHeight() - cy);
+			int y = (int) (InventoryMenu.this.game.getHeight() - cy);
 
 			return this.rect.contains(cx, y);
-		}
+		}*/
+		
+		/*public boolean contains(Rectangle rect)
+		{
+			return this.rect.contains(new Rectangle(rect.x,
+					InventoryMenu.this.game.getHeight() - rect.y,
+					rect.width, 
+					rect.height));
+		}*/
 		
 		public void initPosition()
 		{
@@ -102,6 +109,14 @@ public class InventoryMenu extends Scene
 			this.rect.x += x;
 			this.rect.y += y;
 		}
+		
+		public Rectangle getRect()
+		{
+			return new Rectangle(this.rect.x,
+					InventoryMenu.this.game.getHeight() - this.rect.y - this.rect.height,
+					this.rect.width,
+					this.rect.height);
+		}
 	}
 	
 	protected class Clicked implements EventListener
@@ -115,7 +130,7 @@ public class InventoryMenu extends Scene
 			
 			for(InventoryMenu.Icon icon : InventoryMenu.this.icons)
 			{
-				if( icon.contains(ce.getX(), ce.getY()) )
+				if( ce.on(icon.getRect()) )
 				{
 					InventoryMenu.this.currentItem = icon.getItem();
 				}

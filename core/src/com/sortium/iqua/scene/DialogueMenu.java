@@ -10,6 +10,7 @@ import com.sortium.iqua.Button;
 import com.sortium.iqua.Dialogue;
 import com.sortium.iqua.IquaGame;
 import com.sortium.iqua.NPC;
+import com.sortium.iqua.Sentence;
 import com.sortium.iqua.TextZone;
 import com.sortium.iqua.event.Event;
 
@@ -17,6 +18,7 @@ public class DialogueMenu extends Scene
 {
 	
 	protected Dialogue dialogue;
+	
 	protected Button quitBtn;
 	protected TextZone text;
 	
@@ -100,6 +102,8 @@ public class DialogueMenu extends Scene
 				+ "tincidunt lobortis feugiat vivamus at augue eget arcu dictum varius duis at"
 				+ " consectetur lorem donec massa sapien, faucibus et molestie ac? Purus, in mollis "
 				+ "nunc sed id semper risus.");
+		
+		
 	}
 	
 	public void setDialogue(Dialogue d)
@@ -132,6 +136,12 @@ public class DialogueMenu extends Scene
 	public void update()
 	{
 		this.quitBtn.update();
+		
+		if( this.dialogue != null && this.dialogue.getCurrentSentence() != null )
+		{
+			this.text.setText( this.dialogue.getCurrentSentence().getMessage());
+		}
+		
 		this.text.update();
 	}
 }

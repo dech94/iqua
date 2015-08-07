@@ -5,15 +5,11 @@ import java.util.Stack;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
@@ -30,8 +26,11 @@ import com.sortium.iqua.scene.Scene;
 import com.sortium.iqua.scene.World;
 
 public class IquaGame extends ApplicationAdapter {
+	
+	// CONST
+	private final int androidClickArea = 32;
+	
 	private SpriteBatch batch;
-
 	private Scene mainMenu;
 	private String current = "1";
 	private ArrayList<World> worlds;
@@ -126,7 +125,8 @@ public class IquaGame extends ApplicationAdapter {
 	@Override
 	public void create ()
 	{
-		// STAGE && VIEWPORT & CAMERA
+
+		// CAMERA
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 				
@@ -169,8 +169,16 @@ public class IquaGame extends ApplicationAdapter {
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 		this.dialogueMenu = new DialogueMenu(this);
 		
-		this.dialogueManager.run(new Dialogue(new NPC("Test", "Test", 'M', Status.Villager,
-			new Texture(Gdx.files.internal("images/Characters/test.png"))	)));// TEST*/
+		NPC n = new NPC("Test", "Test", 'M', Status.Villager,
+				new Texture(Gdx.files.internal("images/Characters/test.png")));
+		
+		Dialogue d = new Dialogue(n);
+		ArrayList<Response> ar = new ArrayList<Response>();
+		ar.add( new Response("Oui ça va !", new Sentence("cool !")) );
+		ar.add( new Response("Non, ça ne va pas...", new Sentence("dommage..")) );
+		d.addSentences("Salut mec, ça va ?", ar);
+		
+		this.dialogueManager.run(d);// TEST*/
 	}
 	
 	public void createWorlds()
@@ -212,14 +220,14 @@ public class IquaGame extends ApplicationAdapter {
 			s.update();
 		}
 		
-		if( Gdx.input.isTouched() )
+		
+		if( Gdx.input.justTouched() )
 		{
-			Vector3 vec = new Vector3();
-			vec.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			this.camera.project(vec);
+			int x = Gdx.input.getX();
+			int y = Gdx.input.getY();
 			
-			Event event = new ClickEvent((int)vec.x, (int)vec.y);
-			EventEngine.get().trigger("input.click", event);
+			click(x, y);
+			
 		}
 		
 		for( EntityManager manager : this.managers)
@@ -297,6 +305,27 @@ public class IquaGame extends ApplicationAdapter {
 	public int getHeight()
 	{
 		return (int) this.camera.viewportHeight;
+	}
+	
+	public boolean onAndroid()
+	{
+		return Gdx.app.getType().name().equals("Android");
+	}
+	
+	public void click(int x,int y)
+	{
+		Event event = null;
+		
+		if( onAndroid() )
+		{
+			event = new ClickEvent(x, y, this.androidClickArea);
+		}
+		else
+		{
+			event = new ClickEvent(x, y);
+		}
+		
+		EventEngine.get().trigger("input.click", event);
 	}
 	
 }

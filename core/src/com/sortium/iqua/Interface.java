@@ -1,6 +1,5 @@
 package com.sortium.iqua;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.event.ChangeSceneEvent;
@@ -38,7 +37,7 @@ public class Interface implements Entity
 		
 		ChangeSceneEvent csm = new ChangeSceneEvent("mainMenu");
 		btn_pause = new Button(scene, "images/Btn/btnPause.png", null, 8, 8, 32, 32, "scene.change", csm);
-		btn_inventory = new Button(scene, "images/Btn/btnInv.png", null, 8+32+8, 8, 32, 32, "scene.inventory", new Event());
+		btn_inventory = new Button(scene, "images/Btn/btnInv.png", null, 8+64+8, 8, 32, 32, "scene.inventory", new Event());
 		
 		this.initButtons();
 	}
