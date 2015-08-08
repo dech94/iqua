@@ -33,7 +33,6 @@ public class Button implements Entity
 		{
 			ClickEvent ce = (ClickEvent) event;
 			
-			//if( Button.this.button.contains( ce.getRect() )
 			if( ce.on(Button.this.button)
 				&& Button.this.owner.getGame().getCurrentScene() == Button.this.owner
 				&& System.nanoTime() - Button.this.owner.getStartTime() >= 250000000l

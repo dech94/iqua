@@ -22,15 +22,26 @@ public class TextZone implements Entity
 	protected int begin;
 	protected long scrollDelay;
 	protected long scrollTimer;
+	protected IquaGame game;
 	
-	public TextZone(String str, Rectangle rect, float xScale, float yScale)
+	public static int sizeFor(float xy)
+	{
+		BitmapFont bf = new BitmapFont();
+		bf.getData().scaleX = xy;
+		bf.getData().scaleY = xy;
+		return (int)bf.getLineHeight();
+	}
+	
+	public TextZone(IquaGame game, String str, Rectangle rect, float xScale, float yScale)
 	{
 		this.font = new BitmapFont();
 		this.font.setColor(Color.BLACK);
 		
+		this.game = game;
+		
 		this.begin = 0;
 		
-		this.rect = new Rectangle(rect.x, rect.y - rect.height, rect.width, rect.height);
+		this.rect = new Rectangle(rect.x, rect.y, rect.width, rect.height);
 		
 		this.raw_str = str;
 		
@@ -41,19 +52,24 @@ public class TextZone implements Entity
 		setText(this.raw_str);
 	}
 	
-	public TextZone(String str, Rectangle rect, float xyScale)
+	public TextZone(IquaGame game, String str, Rectangle rect, float xyScale)
 	{
-		this(str, rect, xyScale, xyScale);
+		this(game, str, rect, xyScale, xyScale);
 	}
 	
-	public TextZone(String str, Rectangle rect)
+	public TextZone(IquaGame game, String str, Rectangle rect)
 	{
-		this(str, rect, 1.2f);
+		this(game, str, rect, 1.2f);
 	}
 	
-	public TextZone(String str)
+	public TextZone(IquaGame game, String str)
 	{
-		this(str,  new Rectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		this(game, str,  new Rectangle(0, 0, game.getWidth(), game.getHeight()));
+	}
+	
+	public TextZone(IquaGame game, String str, float xy)
+	{
+		this(game, str,  new Rectangle(0, 0, game.getWidth(), game.getHeight()), xy);
 	}
 	
 	public void setScale(float x, float y)
@@ -70,6 +86,27 @@ public class TextZone implements Entity
 	{
 		this.raw_str = str;
 		updateText();
+	}
+	
+	public void setZone(Rectangle rect)
+	{
+		this.rect = rect;
+		updateText();
+	}
+	
+	public String getText()
+	{
+		return this.raw_str;
+	}
+	
+	public Rectangle getZone()
+	{
+		return this.rect;
+	}
+	
+	public int getHeight()
+	{
+		return (int)this.font.getLineHeight();
 	}
 	
 	public void updateText()
@@ -148,7 +185,7 @@ public class TextZone implements Entity
 			tmp = this.render_str.substring(nthLine(this.begin), this.render_str.length());
 		}
 		
-		this.font.draw(sb, tmp, this.rect.x, this.rect.y + this.rect.height-10);	
+		this.font.draw(sb, tmp, this.rect.x,this.rect.y);	
 	}
 	
 	public void scrollUp(int line)
@@ -176,9 +213,10 @@ public class TextZone implements Entity
 	@Override
 	public void update() 
 	{	
-	
+		Rectangle rect_tmp = new Rectangle(this.rect.x, this.game.getHeight() -this.rect.y, this.rect.width, this.rect.height);
+		// Pas top : créer un objet à chaque update...
 		if( Gdx.input.isTouched()
-				&& this.rect.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()))
+				&& rect_tmp.contains(Gdx.input.getX(), Gdx.input.getY()))
 		{
 			
 			if( System.nanoTime() - this.scrollTimer >= this.scrollDelay)

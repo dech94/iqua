@@ -20,7 +20,7 @@ public class Dialogue
 		Sentence s = new Sentence(msg, responses);
 		this.sentences.add(s);
 		
-		this.currentSentence = this.sentences.get(0);
+		reset();
 		
 	}
 	
@@ -37,6 +37,20 @@ public class Dialogue
 	public Sentence getCurrentSentence()
 	{
 		return this.currentSentence;
+	}
+	
+	public void choose(Response resp)
+	{
+		Sentence next = resp.getNextSentence();
+		
+		if(next == null){return;}
+		
+		this.currentSentence = next;
+	}
+	
+	public void reset()
+	{
+		this.currentSentence = this.sentences.get(0);
 	}
 	
 }

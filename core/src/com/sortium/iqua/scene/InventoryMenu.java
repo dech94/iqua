@@ -167,8 +167,8 @@ public class InventoryMenu extends Scene
 		
 		this.icons = new ArrayList<Icon>();
 		
-
-		this.description = new TextZone("",
+		
+		this.description = new TextZone(this.game, "",
 				new Rectangle(1215*game.getWidth()/2048, 55*game.getHeight()/64,
 						(int)(this.size.x/3), (int)(this.size.y/2)), 1f);
 		

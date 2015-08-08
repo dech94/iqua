@@ -30,6 +30,5 @@ public class Sentence
 	public ArrayList<Response> getResponses()
 	{
 		return this.responses;
-		
 	}
 }

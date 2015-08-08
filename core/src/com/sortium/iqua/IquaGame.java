@@ -48,6 +48,26 @@ public class IquaGame extends ApplicationAdapter {
 
 	private OrthographicCamera camera;
 
+	private class StartGame implements EventListener
+	{
+		@Override
+		public boolean execute(Event event) 
+		{
+			// TEST DIALOGUE
+			NPC n = new NPC("Test", "Test", 'M', Status.Villager,
+					new Texture(Gdx.files.internal("images/Characters/hikari.png")));
+			
+			Dialogue dialog = new Dialogue(n);
+			ArrayList<Response> ar = new ArrayList<Response>();
+			ar.add( new Response("Oui ça va !", new Sentence("cool !")) );
+			ar.add( new Response("Non, ça ne va pas...", new Sentence("dommage..")) );
+			dialog.addSentences("Salut mec, ça va ?", ar);
+			
+			IquaGame.this.dialogueManager.run(dialog);
+			return true;
+		}
+		
+	}
 	
 	private class PopScene implements EventListener
 	{
@@ -121,11 +141,10 @@ public class IquaGame extends ApplicationAdapter {
 		}
 		
 	}
-	
+
 	@Override
 	public void create ()
 	{
-
 		// CAMERA
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -136,8 +155,7 @@ public class IquaGame extends ApplicationAdapter {
 		this.worlds = new ArrayList<World>();
 		createWorlds();
 		
-		
-				
+
 		// SCENE
 		this.mainMenu = new MainMenu(this,current);
 		this.currentScenes = new Stack<Scene>();
@@ -148,6 +166,7 @@ public class IquaGame extends ApplicationAdapter {
 		EventEngine.get().subscribe("scene.pop", new PopScene());
 		EventEngine.get().subscribe("scene.inventory", new PushInventory());
 		EventEngine.get().subscribe("scene.dialogue", new PushDialogue());
+		EventEngine.get().subscribe("iqua.start", new StartGame());
 		
 		// MANAGER
 		this.managers = new ArrayList<EntityManager>();
@@ -168,17 +187,8 @@ public class IquaGame extends ApplicationAdapter {
 		// MENU
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 		this.dialogueMenu = new DialogueMenu(this);
-		
-		NPC n = new NPC("Test", "Test", 'M', Status.Villager,
-				new Texture(Gdx.files.internal("images/Characters/test.png")));
-		
-		Dialogue d = new Dialogue(n);
-		ArrayList<Response> ar = new ArrayList<Response>();
-		ar.add( new Response("Oui ça va !", new Sentence("cool !")) );
-		ar.add( new Response("Non, ça ne va pas...", new Sentence("dommage..")) );
-		d.addSentences("Salut mec, ça va ?", ar);
-		
-		this.dialogueManager.run(d);// TEST*/
+
+
 	}
 	
 	public void createWorlds()
@@ -204,6 +214,12 @@ public class IquaGame extends ApplicationAdapter {
 		{
 			scene.resize(width, height);
 		}
+		
+		for(Scene scene : this.currentScenes)
+		{
+			scene.resize(width, height);
+		}
+
 	}
 	
 	public void update()
@@ -235,7 +251,8 @@ public class IquaGame extends ApplicationAdapter {
 			manager.update();
 		}
 		
-		
+		this.inventoryMenu.update();
+		this.dialogueMenu.update();
 	}
 	
 	public void display()
@@ -305,6 +322,16 @@ public class IquaGame extends ApplicationAdapter {
 	public int getHeight()
 	{
 		return (int) this.camera.viewportHeight;
+	}
+	
+	public int getMouseX()
+	{
+		return Gdx.input.getX();
+	}
+	
+	public int getMouseY()
+	{
+		return getHeight() - Gdx.input.getY();
 	}
 	
 	public boolean onAndroid()
