@@ -36,10 +36,10 @@ public class Interface implements Entity
 		this.right = right;
 		
 		ChangeSceneEvent csm = new ChangeSceneEvent("mainMenu");
-		btn_pause = new Button(scene, "images/Btn/btnPause.png", null, 8, 8, 32, 32);
+		btn_pause = new Button(scene, "images/Btn/btnPause.png", 8, 8, 32, 32);
 		btn_pause.addReaction( "scene.change", csm);
 		
-		btn_inventory = new Button(scene, "images/Btn/btnInv.png", null, 8+64+8, 8, 32, 32);
+		btn_inventory = new Button(scene, "images/Btn/btnInv.png", 8+64+8, 8, 32, 32);
 		btn_inventory.addReaction("scene.inventory");
 		
 		this.initButtons();
@@ -84,28 +84,28 @@ public class Interface implements Entity
 		if( this.up != null )
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent(up);
-			this.btn_up = new Button(scene, "images/Btn/haut.png", null, (width -16)/2, 0, 32, 32);
+			this.btn_up = new Button(scene, "images/Btn/haut.png", (width -16)/2, 0, 32, 32);
 			this.btn_up.addReaction("scene.change", cse);
 		}
 		
 		if( this.down != null )
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent(down);
-			this.btn_down = new Button(scene, "images/Btn/bas.png", null, (width -16)/2, height-32, 32, 32);
+			this.btn_down = new Button(scene, "images/Btn/bas.png",(width -16)/2, height-32, 32, 32);
 			this.btn_down.addReaction("scene.change", cse);
 		}
 		
 		if( this.left != null )
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent(left);
-			this.btn_left = new Button(scene, "images/Btn/gauche.png", null, 0, (height-32)/2, 32, 32);
+			this.btn_left = new Button(scene, "images/Btn/gauche.png", 0, (height-32)/2, 32, 32);
 			this.btn_left.addReaction("scene.change", cse);
 		}
 		
 		if( this.right != null )
 		{
 			ChangeSceneEvent cse = new ChangeSceneEvent(right);
-			this.btn_right = new Button(scene, "images/Btn/droite.png", null, width - 32, (height-32)/2, 32, 32);
+			this.btn_right = new Button(scene, "images/Btn/droite.png", width - 32, (height-32)/2, 32, 32);
 			this.btn_right.addReaction("scene.change", cse);
 		}
 

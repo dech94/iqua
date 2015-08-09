@@ -14,6 +14,12 @@ public class Item extends Button implements Entity
 	protected long id;
 	protected boolean taken;  
 	
+	public Item(Scene owner, String pathTexture, int x,
+			int y, int width, int height, String name, String description) 
+	{
+		this(owner, pathTexture, null, x, y, width, height, name, description);
+	}
+	
 	public Item(Scene owner, String pathTexture, String pathSound, int x,
 			int y, int width, int height, String name, String description) 
 	{

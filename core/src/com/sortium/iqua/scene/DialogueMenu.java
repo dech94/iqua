@@ -95,7 +95,7 @@ public class DialogueMenu extends Scene
 		int btnX = this.game.getWidth() - btnW;
 		int btnY = (this.game.getHeight() - btnH);
 
-		this.quitBtn = new Button(this, "images/Btn/btnClose.png", null, btnX, btnY, btnW, btnH);
+		this.quitBtn = new Button(this, "images/Btn/btnClose.png", btnX, btnY, btnW, btnH);
 		this.quitBtn.addReaction("scene.pop");
 		
 		// TEXT ZONE
