@@ -20,6 +20,7 @@ public class MainMenu extends Menu
 				
 		this.background = new Texture(Gdx.files.internal("images/screenlaunch.png"));
 		this.demoBtn = new Button(this, "images/Btn/btndemo.png", null, (this.game.getWidth()-100)/2, 3*(this.game.getHeight()-32)/4, 96, 32, "scene.change", event );
+		this.demoBtn.addReaction("iqua.start");
 	}
 	
 	

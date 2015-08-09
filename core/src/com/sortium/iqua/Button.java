@@ -1,5 +1,7 @@
 package com.sortium.iqua;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,13 +21,24 @@ public class Button implements Entity
 	protected Rectangle button;
 	protected Texture buttonTexture;
 	protected Sound clickSound;
-	protected String eventid;
-	protected Event event;
+	protected ArrayList<Reaction> reactions;
 
 	protected long delay = 250000000l ;
 	protected long now = System.nanoTime();
 	protected Scene owner;
 	
+	protected class Reaction
+	{
+		public String id;
+		public Event event;
+		
+		public Reaction(String id, Event event)
+		{
+			this.id = id;
+			this.event = event;
+		}
+		
+	}
 	protected class Clicked implements EventListener
 	{
 		@Override
@@ -46,9 +59,9 @@ public class Button implements Entity
 						clickSound.play();
 					}
 					
-					if(Button.this.event != null)
+					for(Reaction reaction : Button.this.reactions)
 					{
-						EventEngine.get().trigger(Button.this.eventid, Button.this.event);
+						EventEngine.get().trigger(reaction.id, reaction.event);
 					}
 					
 					Button.this.now = System.nanoTime();
@@ -85,10 +98,36 @@ public class Button implements Entity
 		button.width = width;
 		button.height = height;
 		
-		this.eventid = eventid;
-		this.event = event;
+		this.reactions = new ArrayList<Reaction>();
+		
+		if(eventid != null && event != null)
+		{
+			this.reactions.add(new Reaction(eventid, event));
+		}
 		
 		EventEngine.get().subscribe("input.click", new Clicked());
+	}
+	
+	public void addReaction(Reaction reaction)
+	{
+		if( reaction != null )
+		{
+			this.reactions.add(reaction);
+		}
+	}
+	
+	public void addReaction(String id, Event event)
+	{
+		if(event != null)
+		{
+			addReaction(new Reaction(id, event));
+		}
+	}
+	
+	public void addReaction(String id)
+	{
+
+		addReaction(id, new Event());
 	}
 	
 	@Override

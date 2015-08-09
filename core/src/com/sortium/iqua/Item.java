@@ -19,8 +19,8 @@ public class Item extends Button implements Entity
 	{
 		super(owner, pathTexture, pathSound, x, y, width, height);
 		
-		this.event = new GetEvent<Item>(this);
-		this.eventid = "item.take";
+		Reaction r = new Reaction("item.take", new GetEvent<Item>(this));
+		this.reactions.add(r);
 		
 		this.name = name;
 		this.description = description;
