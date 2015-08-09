@@ -156,7 +156,8 @@ public class InventoryMenu extends Scene
 		int btnX = 3*game.getWidth()/4 - btnW/2;
 		int btnY = 6*game.getHeight()/8;
 		
-		this.quitBtn = new Button(this, "images/Btn/btnClose.png", null, btnX, btnY, btnW, btnH, "scene.pop", new Event());
+		this.quitBtn = new Button(this, "images/Btn/btnClose.png", null, btnX, btnY, btnW, btnH);
+		this.quitBtn.addReaction("scene.pop");
 		this.inventory = inv;
 		
 		this.bitmapFont = new BitmapFont();

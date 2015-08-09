@@ -21,7 +21,6 @@ public class Dialogue
 		this.sentences.add(s);
 		
 		reset();
-		
 	}
 	
 	public NPC getNPC()

@@ -73,12 +73,7 @@ public class Button implements Entity
 		
 	}
 	
-	public Button(Scene owner, String pathTexture, String pathSound, int x, int y, int width, int height)
-	{
-		this(owner, pathTexture, pathSound, x, y, width, height, null, null);
-	}
-	
-	public Button(Scene owner, String pathTexture, String pathSound, int x, int y, int width, int height, String eventid, Event event) 
+	public Button(Scene owner, String pathTexture, String pathSound, int x, int y, int width, int height/*, String eventid, Event event*/) 
 	{
 		this.owner = owner;
 		this.buttonTexture = new Texture(Gdx.files.internal(pathTexture));
@@ -100,10 +95,10 @@ public class Button implements Entity
 		
 		this.reactions = new ArrayList<Reaction>();
 		
-		if(eventid != null && event != null)
+		/*if(eventid != null && event != null)
 		{
 			this.reactions.add(new Reaction(eventid, event));
-		}
+		}*/
 		
 		EventEngine.get().subscribe("input.click", new Clicked());
 	}

@@ -64,6 +64,7 @@ public class IquaGame extends ApplicationAdapter {
 			dialog.addSentences("Salut mec, ça va ?", ar);
 			
 			IquaGame.this.dialogueManager.run(dialog);
+			
 			return true;
 		}
 		
