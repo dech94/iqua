@@ -7,6 +7,11 @@ public class Response
 	protected String message;
 	protected Sentence next;
 	
+	public Response(String msg)
+	{
+		this(msg, null);
+	}
+	
 	public Response(String msg, Sentence next)
 	{
 		this.message = msg;

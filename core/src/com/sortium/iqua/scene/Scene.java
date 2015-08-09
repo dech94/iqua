@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.sortium.iqua.Entity;
 import com.sortium.iqua.IquaGame;
 
-public class Scene implements Entity
+public class Scene implements Entity, Comparable
 {
 	protected ArrayList<Entity> entities;
 	protected IquaGame game;
@@ -106,22 +106,28 @@ public class Scene implements Entity
 	
 	public void enable(){ this.activated = true; }
 	public void disable(){ this.activated = false; }
-	/*
-	public boolean isReady()
+	
+	public int getArea()
 	{
-		return this.ready;
+		if( this.size.x == 0 && this.size.y == 0 )
+		{
+			return this.background.getWidth() * this.background.getHeight();
+		}
+		return (int)(this.size.x*this.size.y);
 	}
 	
-	public void isReady(boolean b)
-	{
-		this.ready = b;
-	}
-	*/
-
 	@Override
 	public void resize(int w, int h) 
 	{
 		
+	}
+
+	@Override
+	public int compareTo(Object obj) 
+	{
+		Scene scene = (Scene)(obj);
+		
+		return  scene.getArea() - getArea();
 	}
 	
 }

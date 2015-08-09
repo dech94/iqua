@@ -1,6 +1,7 @@
 package com.sortium.iqua;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -53,17 +54,8 @@ public class IquaGame extends ApplicationAdapter {
 		@Override
 		public boolean execute(Event event) 
 		{
-			// TEST DIALOGUE
-			NPC n = new NPC("Test", "Test", 'M', Status.Villager,
-					new Texture(Gdx.files.internal("images/Characters/hikari.png")));
-			
-			Dialogue dialog = new Dialogue(n);
-			ArrayList<Response> ar = new ArrayList<Response>();
-			ar.add( new Response("Oui ça va !", new Sentence("cool !")) );
-			ar.add( new Response("Non, ça ne va pas...", new Sentence("dommage..")) );
-			dialog.addSentences("Salut mec, ça va ?", ar);
-			
-			IquaGame.this.dialogueManager.run(dialog);
+			// INTRO DIALOGUE
+			IquaGame.this.dialogueManager.runIntro();
 			
 			return true;
 		}
@@ -309,10 +301,14 @@ public class IquaGame extends ApplicationAdapter {
 		superimposeScene(to_add);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void superimposeScene(Scene to_add)
 	{
 		to_add.enable();
+
 		this.currentScenes.push(to_add);
+
+		Collections.sort(this.currentScenes);
 	}
 	
 	public int getWidth()

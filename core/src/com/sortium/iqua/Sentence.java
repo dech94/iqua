@@ -27,6 +27,14 @@ public class Sentence
 		return this.message;
 	}
 	
+	public void addResponse(Response resp)
+	{
+		if(resp != null)
+		{
+			this.responses.add(resp);
+		}
+	}
+	
 	public ArrayList<Response> getResponses()
 	{
 		return this.responses;

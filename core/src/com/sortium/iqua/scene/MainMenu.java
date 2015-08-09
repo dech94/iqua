@@ -17,15 +17,14 @@ public class MainMenu extends Menu
 		super(game);
 		
 		ChangeSceneEvent event = new ChangeSceneEvent(current);
-				
+		
 		this.background = new Texture(Gdx.files.internal("images/screenlaunch.png"));
 		this.demoBtn = new Button(this, "images/Btn/btndemo.png", (this.game.getWidth()-100)/2, 3*(this.game.getHeight()-32)/4, 96, 32);
 		
-		this.demoBtn.addReaction( "scene.change", event);
-		this.demoBtn.addReaction("iqua.start");
+		this.demoBtn.addReaction("scene.change", event);
 		
+		this.demoBtn.addReaction("iqua.start");
 	}
-	
 	
 	public void display(SpriteBatch sb, OrthographicCamera camera)
 	{

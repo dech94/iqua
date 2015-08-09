@@ -57,8 +57,15 @@ public class DialogueMenu extends Scene
 
 					if( mouseOver(txt) )
 					{
-						DialogueMenu.this.dialogue.choose(re.resp);
-						updateResponses();
+						if(re.resp.getNextSentence() != null)
+						{
+							DialogueMenu.this.dialogue.choose(re.resp);
+							updateResponses();
+						}
+						else
+						{
+							EventEngine.get().trigger("scene.pop");
+						}
 					}
 				}
 			}
@@ -126,7 +133,14 @@ public class DialogueMenu extends Scene
 		
 		for( Response resp : next_responses )
 		{
-			TextZone tz = new TextZone(this.game, resp.getMessage(), new Rectangle(
+			String msg = resp.getMessage();
+			
+			if(resp.getNextSentence() == null)
+			{
+				msg += " <au revoir>";
+			}
+			
+			TextZone tz = new TextZone(this.game, msg, new Rectangle(
 					this.pos.x + this.size.x/2 + this.xoffset, 
 					this.pos.y + this.size.y - this.yoffset - i*TextZone.sizeFor(1f),
 					this.size.x/2 - this.xoffset,

@@ -18,8 +18,12 @@ public class Dialogue
 	public void addSentences(String msg, ArrayList<Response> responses)
 	{
 		Sentence s = new Sentence(msg, responses);
-		this.sentences.add(s);
-		
+		addSentences(s);
+	}
+	
+	public void addSentences(Sentence sentence)
+	{
+		this.sentences.add(sentence);
 		reset();
 	}
 	
