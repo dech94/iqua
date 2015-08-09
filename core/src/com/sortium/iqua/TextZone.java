@@ -23,6 +23,7 @@ public class TextZone implements Entity
 	protected long scrollDelay;
 	protected long scrollTimer;
 	protected IquaGame game;
+	protected Rectangle rect_tmp;
 	
 	public static int sizeFor(float xy)
 	{
@@ -36,6 +37,8 @@ public class TextZone implements Entity
 	{
 		this.font = new BitmapFont();
 		this.font.setColor(Color.BLACK);
+		
+		this.rect_tmp = new Rectangle();
 		
 		this.game = game;
 		
@@ -210,11 +213,13 @@ public class TextZone implements Entity
 		updateText();
 	}
 	
+	
 	@Override
 	public void update() 
 	{	
-		Rectangle rect_tmp = new Rectangle(this.rect.x, this.game.getHeight() -this.rect.y, this.rect.width, this.rect.height);
-		// Pas top : créer un objet à chaque update...
+		rect_tmp.set(this.rect.x, this.game.getHeight() -this.rect.y, this.rect.width, this.rect.height);
+
+
 		if( Gdx.input.isTouched()
 				&& rect_tmp.contains(Gdx.input.getX(), Gdx.input.getY()))
 		{

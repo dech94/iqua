@@ -204,12 +204,7 @@ public class DialogueMenu extends Scene
 		if( this.dialogue == null ){ return; }
 		
 		this.quitBtn.update();
-		
-		/*if( this.dialogue != null && this.dialogue.getCurrentSentence() != null )
-		{
-			this.text.setText( this.dialogue.getCurrentSentence().getMessage() );
-		}*/
-		
+
 		this.text.update();
 
 		// Check if the mouse is over a response
