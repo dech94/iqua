@@ -54,12 +54,14 @@ public class DialogueMenu extends Scene
 				for(ResponseEntry re : DialogueMenu.this.responses)
 				{
 					TextZone txt = re.tz;
-
+					
 					if( mouseOver(txt) )
 					{
 						if(re.resp.getNextSentence() != null)
 						{
-							DialogueMenu.this.dialogue.choose(re.resp);
+							Dialogue d = DialogueMenu.this.dialogue;
+							d.choose(re.resp);
+							DialogueMenu.this.text.setText(d.getCurrentSentence().getMessage());
 							updateResponses();
 						}
 						else
@@ -110,13 +112,14 @@ public class DialogueMenu extends Scene
 				new Rectangle(this.pos.x + this.xoffset, this.pos.y + this.size.y/3 - this.yoffset,
 						this.size.x, 3*this.size.y/12) , 1f);
 		
-		this.text.setText("Tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet nisl purus, in mollis nunc sed. Consequat semper viverra nam libero justo, laoreet sit amet cursus sit amet? At volutpat diam ut venenatis tellus! Ultricies mi eget mauris pharetra et ultrices neque ornare aenean euismod elementum nisi, quis eleifend quam adipiscing vitae proin sagittis, nisl rhoncus mattis rhoncus, urna? Euismod lacinia at quis risus sed vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam erat velit, scelerisque in dictum non, consectetur a erat nam. Massa tincidunt nunc pulvinar sapien et ligula ullamcorper? Placerat orci nulla pellentesque dignissim enim, sit amet venenatis urna cursus eget nunc. Tristique et, egestas quis ipsum suspendisse ultrices gravida dictum fusce. Et malesuada fames ac turpis egestas sed tempus, urna et pharetra pharetra? Vitae sapien pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas sed tempus, urna et pharetra! Volutpat sed cras ornare arcu dui vivamus arcu felis, bibendum ut tristique et, egestas quis ipsum suspendisse ultrices gravida dictum fusce ut placerat. Ultrices in iaculis nunc sed augue lacus, viverra vitae! Vitae justo eget magna fermentum iaculis eu non diam phasellus vestibulum? Tempus imperdiet nulla malesuada pellentesque elit eget gravida cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus mauris vitae ultricies leo. Posuere ac ut consequat semper viverra nam libero justo, laoreet sit amet cursus sit amet, dictum sit amet justo donec enim diam, vulputate ut pharetra sit. Quisque non tellus orci, ac auctor augue mauris augue neque, gravida in fermentum et, sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque eu! Tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet nisl purus, in mollis nunc sed id semper risus in hendrerit. Volutpat ac tincidunt vitae, semper quis lectus nulla at volutpat diam ut venenatis tellus in metus. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu dictum varius duis at consectetur lorem donec massa! Nulla facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis eu volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Lacus laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean et tortor at risus viverra adipiscing at in tellus. Dignissim cras tincidunt lobortis feugiat vivamus. Orci sagittis eu volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis? Sed viverra ipsum nunc aliquet bibendum enim, facilisis gravida neque convallis a cras semper auctor neque, vitae tempus quam pellentesque nec nam aliquam sem et tortor consequat id. Condimentum id venenatis a, condimentum vitae sapien pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas sed tempus, urna et pharetra pharetra, massa. Amet nulla facilisi morbi tempus iaculis urna, id volutpat lacus laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean et tortor at risus viverra adipiscing at!");
+		//this.text.setText("Tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet nisl purus, in mollis nunc sed. Consequat semper viverra nam libero justo, laoreet sit amet cursus sit amet? At volutpat diam ut venenatis tellus! Ultricies mi eget mauris pharetra et ultrices neque ornare aenean euismod elementum nisi, quis eleifend quam adipiscing vitae proin sagittis, nisl rhoncus mattis rhoncus, urna? Euismod lacinia at quis risus sed vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam erat velit, scelerisque in dictum non, consectetur a erat nam. Massa tincidunt nunc pulvinar sapien et ligula ullamcorper? Placerat orci nulla pellentesque dignissim enim, sit amet venenatis urna cursus eget nunc. Tristique et, egestas quis ipsum suspendisse ultrices gravida dictum fusce. Et malesuada fames ac turpis egestas sed tempus, urna et pharetra pharetra? Vitae sapien pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas sed tempus, urna et pharetra! Volutpat sed cras ornare arcu dui vivamus arcu felis, bibendum ut tristique et, egestas quis ipsum suspendisse ultrices gravida dictum fusce ut placerat. Ultrices in iaculis nunc sed augue lacus, viverra vitae! Vitae justo eget magna fermentum iaculis eu non diam phasellus vestibulum? Tempus imperdiet nulla malesuada pellentesque elit eget gravida cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus mauris vitae ultricies leo. Posuere ac ut consequat semper viverra nam libero justo, laoreet sit amet cursus sit amet, dictum sit amet justo donec enim diam, vulputate ut pharetra sit. Quisque non tellus orci, ac auctor augue mauris augue neque, gravida in fermentum et, sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque eu! Tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet nisl purus, in mollis nunc sed id semper risus in hendrerit. Volutpat ac tincidunt vitae, semper quis lectus nulla at volutpat diam ut venenatis tellus in metus. Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu dictum varius duis at consectetur lorem donec massa! Nulla facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis eu volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Lacus laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean et tortor at risus viverra adipiscing at in tellus. Dignissim cras tincidunt lobortis feugiat vivamus. Orci sagittis eu volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis? Sed viverra ipsum nunc aliquet bibendum enim, facilisis gravida neque convallis a cras semper auctor neque, vitae tempus quam pellentesque nec nam aliquam sem et tortor consequat id. Condimentum id venenatis a, condimentum vitae sapien pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas sed tempus, urna et pharetra pharetra, massa. Amet nulla facilisi morbi tempus iaculis urna, id volutpat lacus laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean et tortor at risus viverra adipiscing at!");
 		
 	}
 	
 	public void setDialogue(Dialogue d)
 	{
 		this.dialogue = d;
+		this.text.setText(this.dialogue.getCurrentSentence().getMessage());
 		updateResponses();
 	}
 	
@@ -202,10 +205,10 @@ public class DialogueMenu extends Scene
 		
 		this.quitBtn.update();
 		
-		if( this.dialogue != null && this.dialogue.getCurrentSentence() != null )
+		/*if( this.dialogue != null && this.dialogue.getCurrentSentence() != null )
 		{
-			this.text.setText( this.dialogue.getCurrentSentence().getMessage());
-		}
+			this.text.setText( this.dialogue.getCurrentSentence().getMessage() );
+		}*/
 		
 		this.text.update();
 
