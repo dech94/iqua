@@ -140,15 +140,26 @@ public class DialogueMenu extends Scene
 				msg += " <au revoir>";
 			}
 			
+			int txtWidth = (int) (this.size.x/2 - this.xoffset);
+			
+			// we don't care, we just want to get his real size
 			TextZone tz = new TextZone(this.game, msg, new Rectangle(
+					0, 
+					0,
+					txtWidth,
+					244249840 /* the value here is not important */));
+			
+			
+			// here we go !
+			tz.setZone(new Rectangle(
 					this.pos.x + this.size.x/2 + this.xoffset, 
-					this.pos.y + this.size.y - this.yoffset - i*TextZone.sizeFor(1f),
-					this.size.x/2 - this.xoffset,
-					TextZone.sizeFor(1f)), 1f);
+					this.pos.y + this.size.y - this.yoffset - i,
+					txtWidth,
+					tz.getHeight()));
 			
+			i+= tz.getHeight() + TextZone.sizeFor(1f);
 			this.responses.add( new ResponseEntry(tz, resp));
-			
-			i+=2;
+
 		}
 	}
 	
@@ -213,7 +224,7 @@ public class DialogueMenu extends Scene
 	
 	private boolean mouseOver(TextZone txt)
 	{
-		return txt.getZone().contains(this.game.getMouseX(), this.game.getMouseY() + TextZone.sizeFor(1f));
+		return txt.getZone().contains(this.game.getMouseX(), this.game.getMouseY() + txt.getHeight());
 	}
 	@Override
 	public void resize(int w, int h)

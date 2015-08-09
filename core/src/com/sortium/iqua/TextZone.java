@@ -106,9 +106,9 @@ public class TextZone implements Entity
 	
 	public int getHeight()
 	{
-		return (int)this.font.getLineHeight();
+		return (nbLine()+1) * (int)this.font.getLineHeight();
 	}
-	
+
 	public void updateText()
 	{
 		this.words = this.raw_str.split(" ");
