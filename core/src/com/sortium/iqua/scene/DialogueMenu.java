@@ -144,7 +144,7 @@ public class DialogueMenu extends Scene
 			
 			// we don't care, we just want to get his real size
 			TextZone tz = new TextZone(this.game, msg, new Rectangle(
-					0, 
+					0,
 					0,
 					txtWidth,
 					244249840 /* the value here is not important */));
@@ -230,5 +230,6 @@ public class DialogueMenu extends Scene
 	public void resize(int w, int h)
 	{
 		initPositions();
+		updateResponses();
 	}
 }
