@@ -177,7 +177,6 @@ public class TextZone implements Entity
 	@Override
 	public void display(SpriteBatch sb, OrthographicCamera camera) 
 	{
-		ShapeRenderer sr = new ShapeRenderer();
 
 		// where to begin the line
 		int begin_tmp = this.render_str.indexOf('\n');
@@ -218,7 +217,6 @@ public class TextZone implements Entity
 	public void update() 
 	{	
 		rect_tmp.set(this.rect.x, this.game.getHeight() -this.rect.y, this.rect.width, this.rect.height);
-
 
 		if( Gdx.input.isTouched()
 				&& rect_tmp.contains(Gdx.input.getX(), Gdx.input.getY()))

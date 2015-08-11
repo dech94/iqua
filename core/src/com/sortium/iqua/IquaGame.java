@@ -138,16 +138,17 @@ public class IquaGame extends ApplicationAdapter {
 	@Override
 	public void create ()
 	{
+		
 		// CAMERA
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-				
+		
 		// WORLD
-		batch = new SpriteBatch();		
+		batch = new SpriteBatch();	
+		
 		this.player = new Player(this);
 		this.worlds = new ArrayList<World>();
 		createWorlds();
-		
 
 		// SCENE
 		this.mainMenu = new MainMenu(this,current);
@@ -180,7 +181,6 @@ public class IquaGame extends ApplicationAdapter {
 		// MENU
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 		this.dialogueMenu = new DialogueMenu(this);
-
 
 	}
 	
@@ -218,7 +218,8 @@ public class IquaGame extends ApplicationAdapter {
 	public void update()
 	{
 		this.camera.update();
-
+		this.batch.setProjectionMatrix(this.camera.combined);
+		
 		if( !this.currentScenes.empty() )
 		{
 			this.currentScenes.peek().update();
@@ -274,11 +275,10 @@ public class IquaGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		update();
-		this.batch.setProjectionMatrix(this.camera.combined);
+		
 		this.batch.begin();
 		display();
 		this.batch.end();
-
 	}
 
 	public Scene getCurrentScene()

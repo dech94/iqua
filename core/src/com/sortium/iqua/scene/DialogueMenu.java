@@ -165,7 +165,7 @@ public class DialogueMenu extends Scene
 
 		}
 	}
-	
+
 	@Override
 	public void display(SpriteBatch sb, OrthographicCamera camera)
 	{
@@ -176,18 +176,17 @@ public class DialogueMenu extends Scene
 		
 		this.text.display(sb, camera);
 		
-		
 		// NPC
 		NPC npc = this.dialogue.getNPC();
 		
 		if( npc != null )
 		{
-			int n_w = (int) (this.size.x/2);
-			int n_h = (int) (2*this.size.y/3);
-			int n_x = (int) ((this.game.getWidth() - this.size.x)/2);
-			int n_y = (int) (this.game.getHeight() - n_h - (this.game.getHeight() - this.size.y)/2);
+			int npc_w = (int) (this.size.x/2);
+			int npc_h = (int) (2*this.size.y/3);
+			int npc_x = (int) ((this.game.getWidth() - this.size.x)/2);
+			int npc_y = (int) (this.game.getHeight() - npc_h - (this.game.getHeight() - this.size.y)/2);
 			
-			npc.display(sb, n_x, n_y, n_w, n_h);
+			npc.display(sb, npc_x, npc_y, npc_w, npc_h);
 		}
 		
 		// RESPONSES
@@ -224,6 +223,7 @@ public class DialogueMenu extends Scene
 	{
 		return txt.getZone().contains(this.game.getMouseX(), this.game.getMouseY() + txt.getHeight());
 	}
+	
 	@Override
 	public void resize(int w, int h)
 	{

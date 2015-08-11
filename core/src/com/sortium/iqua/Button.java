@@ -128,10 +128,7 @@ public class Button implements Entity
 	@Override
 	public void display(SpriteBatch sb, OrthographicCamera camera) 
 	{
-		Vector3 v = new Vector3(this.button.x, camera.viewportHeight - this.button.y, 0);
-		camera.project(v);
-		
-		sb.draw(buttonTexture, v.x , v.y - this.button.height , this.button.width , this.button.height);
+		sb.draw(buttonTexture, this.button.x , camera.viewportHeight - this.button.y - this.button.height , this.button.width , this.button.height);
 	}
 
 	@Override
