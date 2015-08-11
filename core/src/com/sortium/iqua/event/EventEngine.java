@@ -38,11 +38,12 @@ public class EventEngine
 		
 		ArrayList<EventListener> kept = new ArrayList<EventListener>();
 		
-		for( EventListener listener : events.get(id) )
+
+		for(int i=0; i<events.get(id).size(); i++)
 		{
-			if( listener.execute(event) )
+			if( events.get(id).get(i).execute(event) )
 			{
-				kept.add(listener);
+				kept.add(events.get(id).get(i));
 			}
 		}
 		

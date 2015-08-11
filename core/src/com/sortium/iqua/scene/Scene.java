@@ -33,9 +33,9 @@ public class Scene implements Entity, Comparable
 	
 	public void update()
 	{
-		for( Entity entity : this.entities )
+		for(int i=0; i<this.entities.size(); i++)
 		{
-			entity.update();
+			this.entities.get(i).update();
 		}
 	}
 	
@@ -63,9 +63,9 @@ public class Scene implements Entity, Comparable
 			sb.draw(this.background,pos.x, pos.y, camera.viewportWidth, camera.viewportHeight);
 		}
 		
-		for( Entity entity : this.entities )
+		for(int i=0; i<this.entities.size(); i++)
 		{
-			entity.display(sb, camera);
+			this.entities.get(i).display(sb, camera);
 		}
 	}
 	
@@ -83,9 +83,9 @@ public class Scene implements Entity, Comparable
 			}
 		}
 		
-		for( Entity entity : this.entities )
+		for(int i=0; i<this.entities.size(); i++)
 		{
-			entity.display(sb, camera);
+			this.entities.get(i).display(sb, camera);
 		}
 	}
 	

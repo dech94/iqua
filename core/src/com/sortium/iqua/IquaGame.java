@@ -203,14 +203,16 @@ public class IquaGame extends ApplicationAdapter {
 	public void resize(int width, int height)
 	{
 		this.camera.setToOrtho(false, width, height);
-		for(Scene scene : this.worlds)
+		
+
+		for(int i=0; i<this.worlds.size(); i++)
 		{
-			scene.resize(width, height);
+			this.worlds.get(i).resize(width, height);
 		}
 		
-		for(Scene scene : this.currentScenes)
+		for(int i=0 ; i<this.currentScenes.size(); i++)
 		{
-			scene.resize(width, height);
+			this.currentScenes.get(i).resize(width, height);
 		}
 
 	}
@@ -225,11 +227,10 @@ public class IquaGame extends ApplicationAdapter {
 			this.currentScenes.peek().update();
 		}
 		
-		for(Scene s : this.currentScenes)
+		for(int i=0; i<this.currentScenes.size(); i++)
 		{
-			s.update();
+			this.currentScenes.get(i).update();
 		}
-		
 		
 		if( Gdx.input.justTouched() )
 		{
@@ -237,12 +238,11 @@ public class IquaGame extends ApplicationAdapter {
 			int y = Gdx.input.getY();
 			
 			click(x, y);
-			
 		}
-		
-		for( EntityManager manager : this.managers)
+
+		for(int i=0; i<this.managers.size(); i++)
 		{
-			manager.update();
+			this.managers.get(i).update();
 		}
 		
 		this.inventoryMenu.update();
@@ -256,14 +256,14 @@ public class IquaGame extends ApplicationAdapter {
 			this.currentScenes.peek().display(this.batch, this.camera);
 		}
 		
-		for(Scene s : this.currentScenes)
+		for(int i=0; i<this.currentScenes.size(); i++)
 		{
-			s.display(this.batch, this.camera);
+			this.currentScenes.get(i).display(this.batch, this.camera);
 		}
 		
-		for( EntityManager manager : this.managers)
+		for(int i=0; i<this.managers.size(); i++)
 		{
-			manager.display(this.batch, this.camera);
+			this.managers.get(i).display(this.batch, this.camera);
 		}
 		
 	}

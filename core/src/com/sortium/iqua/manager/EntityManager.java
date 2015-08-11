@@ -17,21 +17,21 @@ public class EntityManager extends Manager<Entity> implements Entity
 	@Override
 	public void display(SpriteBatch sb, OrthographicCamera camera) 
 	{
-		for( Entity entity : this.bucket)
+		for(int i=0;i <this.bucket.size(); i++)
 		{
-			if( entity instanceof Button )
+			if( this.bucket.get(i) instanceof Button )
 			{
-				Button b = (Button)entity;
+				Button b = (Button)this.bucket.get(i);
 				
 				if( this.game.getCurrentScene() == b.getScene() )
 				{
-					entity.display(sb, camera);
+					this.bucket.get(i).display(sb, camera);
 				}
 				
 			}
 			else
 			{
-				entity.display(sb, camera);
+				this.bucket.get(i).display(sb, camera);
 			}
 		}
 	}
@@ -39,9 +39,9 @@ public class EntityManager extends Manager<Entity> implements Entity
 	@Override
 	public void update() 
 	{
-		for( Entity entity : this.bucket)
+		for(int i=0;i <this.bucket.size(); i++)
 		{
-			entity.update();
+			this.bucket.get(i).update();
 		}
 	}
 

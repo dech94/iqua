@@ -129,16 +129,17 @@ public class DialogueMenu extends Scene
 		
 		this.responses = new ArrayList<ResponseEntry>();
 		
-		int i = 0;
+		int offset = 0;
 		ArrayList<Response> next_responses = this.dialogue.getCurrentSentence().getResponses();
 		
 		if( next_responses == null ){return;}
 		
-		for( Response resp : next_responses )
+		//for( Response resp : next_responses )
+		for(int i=0; i< next_responses.size(); i++)
 		{
-			String msg = resp.getMessage();
+			String msg = next_responses.get(i).getMessage();
 			
-			if(resp.getNextSentence() == null)
+			if(next_responses.get(i).getNextSentence() == null)
 			{
 				msg += " <au revoir>";
 			}
@@ -156,13 +157,12 @@ public class DialogueMenu extends Scene
 			// here we go !
 			tz.setZone(new Rectangle(
 					this.pos.x + this.size.x/2 + this.xoffset, 
-					this.pos.y + this.size.y - this.yoffset - i,
+					this.pos.y + this.size.y - this.yoffset - offset,
 					txtWidth,
 					tz.getHeight()));
 			
-			i+= tz.getHeight() + TextZone.sizeFor(1f);
-			this.responses.add( new ResponseEntry(tz, resp));
-
+			offset+= tz.getHeight() + TextZone.sizeFor(1f);
+			this.responses.add( new ResponseEntry(tz, next_responses.get(i)));
 		}
 	}
 
@@ -190,9 +190,9 @@ public class DialogueMenu extends Scene
 		}
 		
 		// RESPONSES
-		for(ResponseEntry re: this.responses)
+		for(int i=0; i<this.responses.size(); i++)
 		{
-			TextZone txt = re.tz;
+			TextZone txt = this.responses.get(i).tz;
 			txt.display(sb, camera);
 		}
 	}
@@ -207,9 +207,9 @@ public class DialogueMenu extends Scene
 		this.text.update();
 
 		// Check if the mouse is over a response
-		for(ResponseEntry re : this.responses)
+		for(int i=0; i< this.responses.size(); i++)
 		{
-			TextZone txt = re.tz;
+			TextZone txt = this.responses.get(i).tz;
 			
 			if( mouseOver(txt) )
 			{
