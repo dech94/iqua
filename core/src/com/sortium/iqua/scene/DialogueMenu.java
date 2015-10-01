@@ -108,7 +108,7 @@ public class DialogueMenu extends Scene
 		this.quitBtn.addReaction("scene.pop");
 		
 		// TEXT ZONE
-		this.text = new TextZone(this.game, "test",
+		this.text = new TextZone(this.game, "",
 				new Rectangle(this.pos.x + this.xoffset, this.pos.y + this.size.y/3 - this.yoffset,
 						this.size.x, 3*this.size.y/12) , 1f);
 		
@@ -134,7 +134,6 @@ public class DialogueMenu extends Scene
 		
 		if( next_responses == null ){return;}
 		
-		//for( Response resp : next_responses )
 		for(int i=0; i< next_responses.size(); i++)
 		{
 			String msg = next_responses.get(i).getMessage();

@@ -55,7 +55,7 @@ public class IquaGame extends ApplicationAdapter {
 		public boolean execute(Event event) 
 		{
 			// INTRO DIALOGUE
-			IquaGame.this.dialogueManager.runIntro();
+			//IquaGame.this.dialogueManager.runIntro();
 			
 			return true;
 		}
@@ -138,7 +138,6 @@ public class IquaGame extends ApplicationAdapter {
 	@Override
 	public void create ()
 	{
-		
 		// CAMERA
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
