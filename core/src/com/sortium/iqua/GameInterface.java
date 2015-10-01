@@ -53,7 +53,6 @@ public class GameInterface implements Entity
 		}
 	}
 	
-
 	@Override
 	public void update() 
 	{
