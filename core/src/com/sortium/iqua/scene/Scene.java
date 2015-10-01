@@ -29,6 +29,7 @@ public class Scene implements Entity, Comparable
 		this.game = game;
 		this.pos = new Vector2(0, 0);
 		this.size = new Vector2(0, 0);
+
 	}
 	
 	public void update()

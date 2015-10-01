@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.ClickEvent;
@@ -38,6 +39,8 @@ public class IquaGame extends ApplicationAdapter {
 	private Stack<Scene> currentScenes;
 	private InventoryMenu inventoryMenu;
 	private DialogueMenu dialogueMenu;
+	
+	Vector2[] dimensions;
 	
 	private Player player;
 
@@ -123,6 +126,12 @@ public class IquaGame extends ApplicationAdapter {
 			}
 			
 			int num_sc = Integer.parseInt(sc) - 1;
+			
+			if( num_sc >= IquaGame.this.worlds.size())
+			{
+				return true;
+			}
+			
 			Scene next = IquaGame.this.worlds.get(num_sc);
 			next.resetStartTime();
 			
@@ -174,33 +183,57 @@ public class IquaGame extends ApplicationAdapter {
 		int x = (int)(0.5*getWidth());
 		int y = (int)(0.5*getHeight());
 	
-		this.itemManager.add(new Item(this.worlds.get(2), "images/Items/itmChardon.png", null, x, y, 100, 100, "Fleur de chardon", "Il s'agit d'une fleur de chardon."));
-		this.itemManager.add(new Item(this.worlds.get(0), "images/Items/itmPoupee.png", null, x, y, 100, 100, "Poupée", "Massa placerat duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat in ante metus, dictum at tempor commodo, ullamcorper a lacus vestibulum sed arcu non odio! Malesuada fames ac turpis egestas sed tempus. Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis vel eros donec ac odio tempor orci dapibus ultrices in. Tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus risus, at ultrices? Tortor consequat id porta nibh venenatis cras sed felis eget velit aliquet sagittis id consectetur purus ut faucibus pulvinar? Et netus et malesuada fames ac turpis egestas sed. Lectus urna duis convallis convallis tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet! Curabitur vitae nunc sed velit dignissim sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu. Ut tortor pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus, sed! Eu sem integer vitae justo eget! Odio eu feugiat pretium, nibh ipsum consequat nisl, vel pretium lectus quam id leo in vitae turpis massa sed elementum tempus egestas sed sed risus pretium quam vulputate."));
+		//this.itemManager.add(new Item(this.worlds.get(2), "images/Items/itmChardon.png", null, x, y, 100, 100, "Fleur de chardon", "Il s'agit d'une fleur de chardon."));
+		//this.itemManager.add(new Item(this.worlds.get(0), "images/Items/itmPoupee.png", null, x, y, 100, 100, "Poupée", "Massa placerat duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat in ante metus, dictum at tempor commodo, ullamcorper a lacus vestibulum sed arcu non odio! Malesuada fames ac turpis egestas sed tempus. Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis vel eros donec ac odio tempor orci dapibus ultrices in. Tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus risus, at ultrices? Tortor consequat id porta nibh venenatis cras sed felis eget velit aliquet sagittis id consectetur purus ut faucibus pulvinar? Et netus et malesuada fames ac turpis egestas sed. Lectus urna duis convallis convallis tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet! Curabitur vitae nunc sed velit dignissim sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu. Ut tortor pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus, sed! Eu sem integer vitae justo eget! Odio eu feugiat pretium, nibh ipsum consequat nisl, vel pretium lectus quam id leo in vitae turpis massa sed elementum tempus egestas sed sed risus pretium quam vulputate."));
 		
 		// MENU
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 		this.dialogueMenu = new DialogueMenu(this);
 
+		this.dimensions = new Vector2 [2];
+		this.dimensions[0] = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		this.dimensions[1] = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
 	}
 	
 	public void createWorlds()
 	{
-		this.worlds.add(new World(this, "images/Background/screen1.png", "2", null, null,  null));
-		this.worlds.add(new World(this, "images/Background/screen2.png", "4", "1", null,  "3"));
-		this.worlds.add(new World(this, "images/Background/screen3.png", null, "2", null,  null));
-		this.worlds.add(new World(this, "images/Background/screen4.png", "5", "2", null,  null));
-		this.worlds.add(new World(this, "images/Background/screen5.png", null, "4",null, "6"));
-		this.worlds.add(new World(this, "images/Background/screen6.png", "7", "5", null,  null));
-		this.worlds.add(new World(this, "images/Background/screen7.png", "8", "6", null,  null));
-		this.worlds.add(new World(this, "images/Background/screen8.png", "9", "7", "10",  null));
-		this.worlds.add(new World(this, "images/Background/screen9.png", null, "8", null,  null));
-		this.worlds.add(new World(this, "images/Background/screen10.png", null, "8", null,  null));
-		this.worlds.add(new World(this, "images/work.png", null, null, null, null));
+		World w1 = new World(this, "images/Background/screen1.png");
+		w1.addAWayTo("2", "images/Btn/haut.png", 50, 50, 32, 32);
+		w1.addAWayTo("2", "images/Btn/haut.png", 150, 50, 32, 32);
+		w1.addAWayTo("2", "images/Btn/haut.png", 50, 150, 32, 32);
+		w1.addAWayTo("2", "images/Btn/haut.png", 150, 150, 32, 32);
+		w1.addAWayTo("2", "images/Btn/haut.png", 150, 250, 32, 32);
+		w1.addAWayTo("2", "images/Btn/haut.png", 250, 150, 32, 32);
+		this.worlds.add(w1);
+	
+		this.worlds.add(new World(this, "images/Background/screen2.png"));
+	
+
+		
+		//this.worlds.add(new World(this, "images/work.png"));
+		
+		/*this.worlds.add(new World(this, "images/Background/screen2.png"));
+		this.worlds.add(new World(this, "images/Background/screen3.png"));
+		this.worlds.add(new World(this, "images/Background/screen4.png"));
+		this.worlds.add(new World(this, "images/Background/screen5.png"));
+		this.worlds.add(new World(this, "images/Background/screen6.png"));
+		this.worlds.add(new World(this, "images/Background/screen7.png"));
+		this.worlds.add(new World(this, "images/Background/screen8.png"));
+		this.worlds.add(new World(this, "images/Background/screen9.png"));
+		this.worlds.add(new World(this, "images/Background/screen10.png"));
+		this.worlds.add(new World(this, "images/work.png"));*/
 		
 	}
 	
 	public void resize(int width, int height)
 	{
+		this.dimensions[0].x = this.dimensions[1].x;
+		this.dimensions[0].y = this.dimensions[1].y;
+		
+		this.dimensions[1].x = width;
+		this.dimensions[1].y = height;
+		
 		this.camera.setToOrtho(false, width, height);
 		
 
@@ -319,6 +352,17 @@ public class IquaGame extends ApplicationAdapter {
 	{
 		return (int) this.camera.viewportHeight;
 	}
+	
+	public int getLastWidth()
+	{
+		return (int) this.dimensions[0].x;
+	}
+	
+	public int getLastHeight()
+	{
+		return (int) this.dimensions[0].y;
+	}
+	
 	
 	public int getMouseX()
 	{

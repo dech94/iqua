@@ -149,7 +149,11 @@ public class Button implements Entity
 	@Override
 	public void resize(int w, int h) 
 	{
+		this.button.width = (this.button.width * w)/this.owner.getGame().getLastWidth();
+		this.button.height= (this.button.height* h)/this.owner.getGame().getLastHeight();
 		
+		this.button.x = (this.button.x * w)/this.owner.getGame().getLastWidth();
+		this.button.y = (this.button.y * h)/this.owner.getGame().getLastHeight();
 	}
 	
 }

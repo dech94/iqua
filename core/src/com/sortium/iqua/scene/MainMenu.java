@@ -32,5 +32,11 @@ public class MainMenu extends Menu
 		this.demoBtn.display(sb, camera);
 	}
 	
+	@Override
+	public void resize(int w, int h)
+	{
+		this.demoBtn.resize(w,  h);
+	}
+	
 	
 }
