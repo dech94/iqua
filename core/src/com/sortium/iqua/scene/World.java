@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.Button;
 import com.sortium.iqua.GameInterface;
 import com.sortium.iqua.IquaGame;
+import com.sortium.iqua.PointOfInterest;
 import com.sortium.iqua.event.ChangeSceneEvent;
 import com.sortium.iqua.event.EventEngine;
 
@@ -17,7 +18,7 @@ public class World extends Scene
 	
 	protected GameInterface inter;
 	
-	protected ArrayList<Button> pointOfInterest;
+	protected ArrayList<PointOfInterest> pointOfInterest;
 	
 	public World(IquaGame game, String img_path)
 	{
@@ -25,12 +26,12 @@ public class World extends Scene
 		this.background = new Texture(Gdx.files.internal(img_path));
 		this.inter = new GameInterface(this.game, this, img_path);
 		
-		this.pointOfInterest = new ArrayList<Button>();
+		this.pointOfInterest = new ArrayList<PointOfInterest>();
 	}
 	
 	public void addAWayTo(String world_num, String pathTexture, int x, int y, int w, int h)
 	{
-		Button newPof = new Button(this, pathTexture, x, y, w, h);
+		PointOfInterest newPof = new PointOfInterest(this, pathTexture, x, y, w, h);
 		newPof.addReaction("scene.change", new ChangeSceneEvent(world_num));
 		this.pointOfInterest.add(newPof);
 	}

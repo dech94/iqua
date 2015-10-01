@@ -199,12 +199,7 @@ public class IquaGame extends ApplicationAdapter {
 	public void createWorlds()
 	{
 		World w1 = new World(this, "images/Background/screen1.png");
-		w1.addAWayTo("2", "images/Btn/haut.png", 50, 50, 32, 32);
-		w1.addAWayTo("2", "images/Btn/haut.png", 150, 50, 32, 32);
-		w1.addAWayTo("2", "images/Btn/haut.png", 50, 150, 32, 32);
-		w1.addAWayTo("2", "images/Btn/haut.png", 150, 150, 32, 32);
-		w1.addAWayTo("2", "images/Btn/haut.png", 150, 250, 32, 32);
-		w1.addAWayTo("2", "images/Btn/haut.png", 250, 150, 32, 32);
+		w1.addAWayTo("2", "images/PointOfInterest/poi_bridge.png", 316, 118, 160, 43);
 		this.worlds.add(w1);
 	
 		this.worlds.add(new World(this, "images/Background/screen2.png"));
