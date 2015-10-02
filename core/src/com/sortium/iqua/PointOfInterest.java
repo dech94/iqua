@@ -7,8 +7,8 @@ import com.sortium.iqua.scene.Scene;
 public class PointOfInterest extends Button
 {
 
-	private float alpha_step = 0.1f;
-	private float alpha_max = 1.0f;
+	private float alpha_step = 0.02f;
+	private float alpha_max = 0.3f;
 	private float alpha_min = 0f;
 	private float alpha = this.alpha_max;
 	
