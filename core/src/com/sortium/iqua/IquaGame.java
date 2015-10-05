@@ -24,6 +24,7 @@ import com.sortium.iqua.manager.ItemManager;
 import com.sortium.iqua.scene.DialogueMenu;
 import com.sortium.iqua.scene.InventoryMenu;
 import com.sortium.iqua.scene.MainMenu;
+import com.sortium.iqua.scene.QueteMenu;
 import com.sortium.iqua.scene.Scene;
 import com.sortium.iqua.scene.World;
 
@@ -39,6 +40,8 @@ public class IquaGame extends ApplicationAdapter {
 	private Stack<Scene> currentScenes;
 	private InventoryMenu inventoryMenu;
 	private DialogueMenu dialogueMenu;
+	private QueteMenu quetemenu;
+	
 	
 	Vector2[] dimensions;
 	
@@ -106,6 +109,16 @@ public class IquaGame extends ApplicationAdapter {
 		
 	}
 	
+	private class PushQuete implements EventListener
+	{
+		@Override
+		public boolean execute(Event event)
+		{
+			superimposeScene(IquaGame.this.quetemenu);
+			return true;
+		}
+	}
+	
 	private class ChangeScene implements EventListener
 	{
 		@Override
@@ -168,6 +181,7 @@ public class IquaGame extends ApplicationAdapter {
 		EventEngine.get().subscribe("scene.pop", new PopScene());
 		EventEngine.get().subscribe("scene.inventory", new PushInventory());
 		EventEngine.get().subscribe("scene.dialogue", new PushDialogue());
+		EventEngine.get().subscribe("scene.quete", new PushQuete());
 		EventEngine.get().subscribe("iqua.start", new StartGame());
 		
 		// MANAGER
@@ -183,12 +197,13 @@ public class IquaGame extends ApplicationAdapter {
 		int x = (int)(0.5*getWidth());
 		int y = (int)(0.5*getHeight());
 	
-		//this.itemManager.add(new Item(this.worlds.get(2), "images/Items/itmChardon.png", null, x, y, 100, 100, "Fleur de chardon", "Il s'agit d'une fleur de chardon."));
-		//this.itemManager.add(new Item(this.worlds.get(0), "images/Items/itmPoupee.png", null, x, y, 100, 100, "Poupée", "Massa placerat duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat in ante metus, dictum at tempor commodo, ullamcorper a lacus vestibulum sed arcu non odio! Malesuada fames ac turpis egestas sed tempus. Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis vel eros donec ac odio tempor orci dapibus ultrices in. Tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus risus, at ultrices? Tortor consequat id porta nibh venenatis cras sed felis eget velit aliquet sagittis id consectetur purus ut faucibus pulvinar? Et netus et malesuada fames ac turpis egestas sed. Lectus urna duis convallis convallis tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet! Curabitur vitae nunc sed velit dignissim sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu. Ut tortor pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus, sed! Eu sem integer vitae justo eget! Odio eu feugiat pretium, nibh ipsum consequat nisl, vel pretium lectus quam id leo in vitae turpis massa sed elementum tempus egestas sed sed risus pretium quam vulputate."));
+		this.itemManager.add(new Item(this.worlds.get(2), "images/Items/itmChardon.png", null, x, y, 100, 100, "Fleur de chardon", "Il s'agit d'une fleur de chardon."));
+		this.itemManager.add(new Item(this.worlds.get(0), "images/Items/itmPoupee.png", null, x, y, 100, 100, "Poupée", "Massa placerat duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat in ante metus, dictum at tempor commodo, ullamcorper a lacus vestibulum sed arcu non odio! Malesuada fames ac turpis egestas sed tempus. Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis vel eros donec ac odio tempor orci dapibus ultrices in. Tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus risus, at ultrices? Tortor consequat id porta nibh venenatis cras sed felis eget velit aliquet sagittis id consectetur purus ut faucibus pulvinar? Et netus et malesuada fames ac turpis egestas sed. Lectus urna duis convallis convallis tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet! Curabitur vitae nunc sed velit dignissim sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu. Ut tortor pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus, sed! Eu sem integer vitae justo eget! Odio eu feugiat pretium, nibh ipsum consequat nisl, vel pretium lectus quam id leo in vitae turpis massa sed elementum tempus egestas sed sed risus pretium quam vulputate."));
 		
 		// MENU
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
 		this.dialogueMenu = new DialogueMenu(this);
+		this.quetemenu = new QueteMenu(this);
 
 		this.dimensions = new Vector2 [2];
 		this.dimensions[0] = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -198,7 +213,7 @@ public class IquaGame extends ApplicationAdapter {
 	
 	public void createWorlds()
 	{
-		World w1 = new World(this, "images/Background/screen1.png");
+		/*World w1 = new World(this, "images/Background/screen1.png");
 		w1.addAWayTo("2", "images/Btn/haut.png", 50, 50, 32, 32);
 		w1.addAWayTo("2", "images/Btn/haut.png", 150, 50, 32, 32);
 		w1.addAWayTo("2", "images/Btn/haut.png", 50, 150, 32, 32);
@@ -207,13 +222,13 @@ public class IquaGame extends ApplicationAdapter {
 		w1.addAWayTo("2", "images/Btn/haut.png", 250, 150, 32, 32);
 		this.worlds.add(w1);
 	
-		this.worlds.add(new World(this, "images/Background/screen2.png"));
+		this.worlds.add(new World(this, "images/Background/screen2.png"));*/
 	
 
 		
 		//this.worlds.add(new World(this, "images/work.png"));
 		
-		/*this.worlds.add(new World(this, "images/Background/screen2.png"));
+		this.worlds.add(new World(this, "images/Background/screen2.png"));
 		this.worlds.add(new World(this, "images/Background/screen3.png"));
 		this.worlds.add(new World(this, "images/Background/screen4.png"));
 		this.worlds.add(new World(this, "images/Background/screen5.png"));
@@ -222,7 +237,7 @@ public class IquaGame extends ApplicationAdapter {
 		this.worlds.add(new World(this, "images/Background/screen8.png"));
 		this.worlds.add(new World(this, "images/Background/screen9.png"));
 		this.worlds.add(new World(this, "images/Background/screen10.png"));
-		this.worlds.add(new World(this, "images/work.png"));*/
+		this.worlds.add(new World(this, "images/work.png"));
 		
 	}
 	
@@ -279,6 +294,7 @@ public class IquaGame extends ApplicationAdapter {
 		
 		this.inventoryMenu.update();
 		this.dialogueMenu.update();
+		this.quetemenu.update();
 	}
 	
 	public void display()
