@@ -141,7 +141,7 @@ public class QueteMenu extends Scene
 		
 	}
 	
-	public QueteMenu(IquaGame game, Inventory inv)
+	public QueteMenu(IquaGame game)
 	{
 		super(game);
 		this.background = new Texture(Gdx.files.internal("images/quest.png"));
@@ -158,7 +158,6 @@ public class QueteMenu extends Scene
 		
 		this.quitBtn = new Button(this, "images/Btn/btnQuit.png", btnX, btnY, btnW, btnH);
 		this.quitBtn.addReaction("scene.pop");
-		this.inventory = inv;
 		
 		this.bitmapFont = new BitmapFont();
 		this.currentItem = null;
