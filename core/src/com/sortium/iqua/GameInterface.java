@@ -42,6 +42,10 @@ public class GameInterface implements Entity
 		btn_inventory.addReaction("scene.inventory");
 		this.buttons.add(btn_inventory);
 		
+		btn_quest = new Button(scene, "images/Btn/btnQuete.png", 8+128+16, 8, 32, 32);
+		btn_quest.addReaction("scene.quete");
+		this.buttons.add(btn_quest);
+		
 	}
 	
 	@Override
