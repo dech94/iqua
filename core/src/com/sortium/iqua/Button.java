@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.sortium.iqua.event.ClickEvent;
 import com.sortium.iqua.event.Event;
 import com.sortium.iqua.event.EventListener;
+import com.sortium.iqua.event.Reaction;
 import com.sortium.iqua.event.EventEngine;
 import com.sortium.iqua.scene.Scene;
 
@@ -26,18 +27,6 @@ public class Button implements Entity
 	protected long now = System.nanoTime();
 	protected Scene owner;
 	
-	protected class Reaction
-	{
-		public String id;
-		public Event event;
-		
-		public Reaction(String id, Event event)
-		{
-			this.id = id;
-			this.event = event;
-		}
-		
-	}
 	protected class Clicked implements EventListener
 	{
 		@Override

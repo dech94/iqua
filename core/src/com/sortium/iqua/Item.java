@@ -3,6 +3,7 @@ package com.sortium.iqua;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sortium.iqua.event.GetEvent;
+import com.sortium.iqua.event.Reaction;
 import com.sortium.iqua.scene.Scene;
 
 public class Item extends Button implements Entity 
