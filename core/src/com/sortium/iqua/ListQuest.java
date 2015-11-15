@@ -7,6 +7,8 @@ import com.sortium.iqua.event.EventEngine;
 import com.sortium.iqua.event.EventListener;
 import com.sortium.iqua.event.GetEvent;
 
+import Quest.Quest;
+
 public class ListQuest {
 	protected ArrayList<Quest> list;
 	protected IquaGame game;

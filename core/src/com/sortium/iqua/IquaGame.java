@@ -21,12 +21,16 @@ import com.sortium.iqua.event.EventEngine;
 import com.sortium.iqua.manager.DialogueManager;
 import com.sortium.iqua.manager.EntityManager;
 import com.sortium.iqua.manager.ItemManager;
+import com.sortium.iqua.manager.QuestManager;
 import com.sortium.iqua.scene.DialogueMenu;
 import com.sortium.iqua.scene.InventoryMenu;
 import com.sortium.iqua.scene.MainMenu;
 import com.sortium.iqua.scene.QueteMenu;
 import com.sortium.iqua.scene.Scene;
 import com.sortium.iqua.scene.World;
+
+import Quest.ItemQuestCondition;
+import Quest.Quest;
 
 public class IquaGame extends ApplicationAdapter {
 	
@@ -51,6 +55,7 @@ public class IquaGame extends ApplicationAdapter {
 	private ArrayList<EntityManager> managers;
 	private ItemManager itemManager;
 	private DialogueManager dialogueManager;
+	private QuestManager questManager;
 	
 
 	private OrthographicCamera camera;
@@ -193,12 +198,26 @@ public class IquaGame extends ApplicationAdapter {
 		this.dialogueManager = new DialogueManager(this);
 		this.managers.add(this.itemManager);
 	
+		this.questManager = new QuestManager(this);
+
+		
 		// ITEM
 		int x = (int)(0.5*getWidth());
 		int y = (int)(0.5*getHeight());
-	
+		
+		Item poupee = new Item(this.worlds.get(0), "images/Items/itmPoupee.png", null, x, y, 100, 100, "Poupée", "Massa placerat duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat in ante metus, dictum at tempor commodo, ullamcorper a lacus vestibulum sed arcu non odio! Malesuada fames ac turpis egestas sed tempus. Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis vel eros donec ac odio tempor orci dapibus ultrices in. Tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus risus, at ultrices? Tortor consequat id porta nibh venenatis cras sed felis eget velit aliquet sagittis id consectetur purus ut faucibus pulvinar? Et netus et malesuada fames ac turpis egestas sed. Lectus urna duis convallis convallis tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet! Curabitur vitae nunc sed velit dignissim sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu. Ut tortor pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus, sed! Eu sem integer vitae justo eget! Odio eu feugiat pretium, nibh ipsum consequat nisl, vel pretium lectus quam id leo in vitae turpis massa sed elementum tempus egestas sed sed risus pretium quam vulputate.");
+		Item poupee2 = new Item(this.worlds.get(1), "images/Items/itmPoupee.png", null, x/2, y, 100, 100, "Poupée 2", "Massa placerat duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat in ante metus, dictum at tempor commodo, ullamcorper a lacus vestibulum sed arcu non odio! Malesuada fames ac turpis egestas sed tempus. Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis vel eros donec ac odio tempor orci dapibus ultrices in. Tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus risus, at ultrices? Tortor consequat id porta nibh venenatis cras sed felis eget velit aliquet sagittis id consectetur purus ut faucibus pulvinar? Et netus et malesuada fames ac turpis egestas sed. Lectus urna duis convallis convallis tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet! Curabitur vitae nunc sed velit dignissim sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu. Ut tortor pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus, sed! Eu sem integer vitae justo eget! Odio eu feugiat pretium, nibh ipsum consequat nisl, vel pretium lectus quam id leo in vitae turpis massa sed elementum tempus egestas sed sed risus pretium quam vulputate.");
+		
 		this.itemManager.add(new Item(this.worlds.get(2), "images/Items/itmChardon.png", null, x, y, 100, 100, "Fleur de chardon", "Il s'agit d'une fleur de chardon."));
-		this.itemManager.add(new Item(this.worlds.get(0), "images/Items/itmPoupee.png", null, x, y, 100, 100, "Poupée", "Massa placerat duis ultricies lacus sed turpis tincidunt id aliquet risus feugiat in ante metus, dictum at tempor commodo, ullamcorper a lacus vestibulum sed arcu non odio! Malesuada fames ac turpis egestas sed tempus. Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum lacinia quis vel eros donec ac odio tempor orci dapibus ultrices in. Tellus elementum sagittis vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus risus, at ultrices? Tortor consequat id porta nibh venenatis cras sed felis eget velit aliquet sagittis id consectetur purus ut faucibus pulvinar? Et netus et malesuada fames ac turpis egestas sed. Lectus urna duis convallis convallis tellus, id interdum velit laoreet id donec ultrices tincidunt arcu, non sodales neque sodales ut etiam sit amet! Curabitur vitae nunc sed velit dignissim sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu. Ut tortor pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus, sed! Eu sem integer vitae justo eget! Odio eu feugiat pretium, nibh ipsum consequat nisl, vel pretium lectus quam id leo in vitae turpis massa sed elementum tempus egestas sed sed risus pretium quam vulputate."));
+		this.itemManager.add(poupee);
+		this.itemManager.add(poupee2);
+		
+		// QUEST
+		Quest quest1 = new Quest("A la recherche de la poupée", "Tu dois rammaser la poupée...");
+		quest1.addCondition(new ItemQuestCondition(quest1, poupee));
+		quest1.addCondition(new ItemQuestCondition(quest1, poupee2));
+		
+		this.questManager.add(quest1);
 		
 		// MENU
 		this.inventoryMenu = new InventoryMenu(this, this.player.getInventory());
